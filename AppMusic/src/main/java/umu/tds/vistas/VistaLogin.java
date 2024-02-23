@@ -1,27 +1,24 @@
 package umu.tds.vistas;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
 import java.awt.BorderLayout;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.JTextField;
-import javax.swing.BoxLayout;
-import java.awt.CardLayout;
-import java.awt.GridLayout;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.FlowLayout;
 import java.awt.Component;
-import javax.swing.border.LineBorder;
-import java.awt.Color;
+import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.border.LineBorder;
 
 public class VistaLogin {
 
@@ -56,33 +53,41 @@ public class VistaLogin {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		try {
+			UIManager.setLookAndFeel("com.jtattoo.plaf.acryl.AcrylLookAndFeel");
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| UnsupportedLookAndFeelException e) {
+			e.printStackTrace();
+		}
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
 		
-		JPanel panelTitulo = new JPanel();
-		frame.getContentPane().add(panelTitulo, BorderLayout.NORTH);
-		
-		JLabel lblTitulo = new JLabel("AppMusic");
-		lblTitulo.setFont(new Font("Tahoma", Font.BOLD, 26));
-		panelTitulo.add(lblTitulo);
-		
 		JPanel panelLogin = new JPanel();
 		frame.getContentPane().add(panelLogin, BorderLayout.CENTER);
 		GridBagLayout gbl_panelLogin = new GridBagLayout();
-		gbl_panelLogin.columnWidths = new int[]{15, 30, 167, 15, 0};
-		gbl_panelLogin.rowHeights = new int[]{20, 43, 43, 60, 43, 43, 0};
+		gbl_panelLogin.columnWidths = new int[]{30, 30, 167, 30, 0};
+		gbl_panelLogin.rowHeights = new int[]{30, 20, 20, 43, 43, 60, 43, 43, 30, 0};
 		gbl_panelLogin.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gbl_panelLogin.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_panelLogin.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panelLogin.setLayout(gbl_panelLogin);
+		
+		JLabel lblNewLabel = new JLabel("AppMusic");
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 26));
+		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
+		gbc_lblNewLabel.gridwidth = 2;
+		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel.gridx = 1;
+		gbc_lblNewLabel.gridy = 1;
+		panelLogin.add(lblNewLabel, gbc_lblNewLabel);
 		
 		JLabel lblUsuario = new JLabel("Usuario");
 		GridBagConstraints gbc_lblUsuario = new GridBagConstraints();
 		gbc_lblUsuario.insets = new Insets(0, 0, 5, 5);
 		gbc_lblUsuario.anchor = GridBagConstraints.EAST;
 		gbc_lblUsuario.gridx = 1;
-		gbc_lblUsuario.gridy = 1;
+		gbc_lblUsuario.gridy = 3;
 		panelLogin.add(lblUsuario, gbc_lblUsuario);
 		
 		textField = new JTextField();
@@ -91,7 +96,7 @@ public class VistaLogin {
 		gbc_textField.fill = GridBagConstraints.BOTH;
 		gbc_textField.insets = new Insets(0, 0, 5, 5);
 		gbc_textField.gridx = 2;
-		gbc_textField.gridy = 1;
+		gbc_textField.gridy = 3;
 		panelLogin.add(textField, gbc_textField);
 		textField.setColumns(10);
 		
@@ -100,7 +105,7 @@ public class VistaLogin {
 		gbc_lblContraseña.insets = new Insets(0, 0, 5, 5);
 		gbc_lblContraseña.anchor = GridBagConstraints.EAST;
 		gbc_lblContraseña.gridx = 1;
-		gbc_lblContraseña.gridy = 2;
+		gbc_lblContraseña.gridy = 4;
 		panelLogin.add(lblContraseña, gbc_lblContraseña);
 		
 		textField_1 = new JTextField();
@@ -109,7 +114,7 @@ public class VistaLogin {
 		gbc_textField_1.fill = GridBagConstraints.BOTH;
 		gbc_textField_1.insets = new Insets(0, 0, 5, 5);
 		gbc_textField_1.gridx = 2;
-		gbc_textField_1.gridy = 2;
+		gbc_textField_1.gridy = 4;
 		panelLogin.add(textField_1, gbc_textField_1);
 		textField_1.setColumns(10);
 		
@@ -118,7 +123,7 @@ public class VistaLogin {
 		gbc_panel.insets = new Insets(0, 0, 5, 5);
 		gbc_panel.fill = GridBagConstraints.VERTICAL;
 		gbc_panel.gridx = 2;
-		gbc_panel.gridy = 4;
+		gbc_panel.gridy = 6;
 		panelLogin.add(panel, gbc_panel);
 		GridBagLayout gbl_panel = new GridBagLayout();
 		gbl_panel.columnWidths = new int[]{154, 154, 0};
@@ -152,10 +157,10 @@ public class VistaLogin {
 		
 		JPanel panel_1 = new JPanel();
 		GridBagConstraints gbc_panel_1 = new GridBagConstraints();
-		gbc_panel_1.insets = new Insets(0, 0, 0, 5);
+		gbc_panel_1.insets = new Insets(0, 0, 5, 5);
 		gbc_panel_1.fill = GridBagConstraints.VERTICAL;
 		gbc_panel_1.gridx = 2;
-		gbc_panel_1.gridy = 5;
+		gbc_panel_1.gridy = 7;
 		panelLogin.add(panel_1, gbc_panel_1);
 		GridBagLayout gbl_panel_1 = new GridBagLayout();
 		gbl_panel_1.columnWidths = new int[]{308, 0};
