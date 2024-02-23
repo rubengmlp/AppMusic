@@ -19,6 +19,8 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.LineBorder;
+import javax.swing.ImageIcon;
+import java.awt.Color;
 
 public class VistaLogin {
 
@@ -73,7 +75,9 @@ public class VistaLogin {
 		gbl_panelLogin.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panelLogin.setLayout(gbl_panelLogin);
 		
-		JLabel lblNewLabel = new JLabel("AppMusic");
+		JLabel lblNewLabel = new JLabel("AppMusic ");
+		lblNewLabel.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
+		lblNewLabel.setIcon(new ImageIcon(VistaLogin.class.getResource("/umu/tds/imagenes/logo3.png")));
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 26));
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 		gbc_lblNewLabel.gridwidth = 2;
@@ -133,6 +137,7 @@ public class VistaLogin {
 		panel.setLayout(gbl_panel);
 		
 		JButton botonLoginGitHub = new JButton("Login con GitHub");
+		botonLoginGitHub.setIcon(new ImageIcon(VistaLogin.class.getResource("/umu/tds/imagenes/icons8-github-24.png")));
 		botonLoginGitHub.setBorder(new LineBorder(SystemColor.activeCaptionBorder, 2, true));
 		botonLoginGitHub.setAlignmentX(Component.CENTER_ALIGNMENT);
 		botonLoginGitHub.addActionListener(new ActionListener() {
@@ -141,6 +146,7 @@ public class VistaLogin {
 		});
 		
 		JButton botonLogin = new JButton("Login");
+		botonLogin.setIcon(new ImageIcon(VistaLogin.class.getResource("/umu/tds/imagenes/icons8-login-24.png")));
 		botonLogin.setBorder(new LineBorder(SystemColor.activeCaptionBorder, 2, true));
 		botonLogin.setAlignmentX(Component.CENTER_ALIGNMENT);
 		GridBagConstraints gbc_botonLogin = new GridBagConstraints();
@@ -170,6 +176,7 @@ public class VistaLogin {
 		panel_1.setLayout(gbl_panel_1);
 		
 		JButton btnRegistro = new JButton("Registro");
+		btnRegistro.setIcon(new ImageIcon(VistaLogin.class.getResource("/umu/tds/imagenes/icons8-register-24.png")));
 		btnRegistro.setBorder(new LineBorder(SystemColor.activeCaptionBorder, 2, true));
 		btnRegistro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
