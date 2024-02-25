@@ -21,6 +21,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.LineBorder;
 import javax.swing.ImageIcon;
 import java.awt.Color;
+import java.awt.Toolkit;
 
 public class VistaLogin {
 
@@ -62,6 +63,7 @@ public class VistaLogin {
 			e.printStackTrace();
 		}
 		frame = new JFrame();
+		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(VistaLogin.class.getResource("/umu/tds/imagenes/logo3.png")));
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));

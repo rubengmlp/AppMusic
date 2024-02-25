@@ -24,6 +24,8 @@ import javax.swing.UnsupportedLookAndFeelException;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
+import javax.swing.ImageIcon;
+import java.awt.Toolkit;
 
 public class VistaRegister extends JFrame {
 
@@ -59,6 +61,7 @@ public class VistaRegister extends JFrame {
 	 * Create the frame.
 	 */
 	public VistaRegister() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(VistaRegister.class.getResource("/umu/tds/imagenes/logo3.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -157,6 +160,7 @@ public class VistaRegister extends JFrame {
 		panel_4.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		JButton btnNewButton = new JButton("Registro");
+		btnNewButton.setIcon(new ImageIcon(VistaRegister.class.getResource("/umu/tds/imagenes/icons8-register-24.png")));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
