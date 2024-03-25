@@ -1,15 +1,48 @@
 package umu.tds.dominio;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Cancion {
-	private String titulo;
-	private String rutaFichero;
-	private int numReproducciones;
-	private String interprete;
-	private String estilo;
 
-	// TODO Constructor
+	private String titulo;
+	private int numRep;
+	private int codigo;
+	private final String url;
+	private Set<Etiqueta> etiquetas = new HashSet<Etiqueta>();
+
+	public Cancion (String titulo, int numRepro, String url, Etiqueta... e) {
+		this.titulo = titulo;
+		this.numRep =  numRepro;
+		this.url = url;
+		for(Etiqueta i : e) {
+			etiquetas.add(i);
+		}
+	}
+
+	public Cancion(String titulo, int numRepro, String url, List<Etiqueta> e) {
+		this.titulo = titulo;
+		this.numRep =  numRepro;
+		this.url = url;
+		for(Etiqueta i : e) {
+			etiquetas.add(i);
+		}
+	}
+
+	public Cancion (String titulo, int numRepro, String url) {
+		this.titulo = titulo;
+		this.numRep =  numRepro;
+		this.url = url;
+	}
+
+	public void addReproduccion() {
+		this.numRep++;
+	}
+
+	public void addEtiqueta(Etiqueta e) {
+		this.etiquetas.add(e);
+	}
 
 	public String getTitulo() {
 		return titulo;
@@ -19,37 +52,42 @@ public class Cancion {
 		this.titulo = titulo;
 	}
 
-	public String getRutaFichero() {
-		return rutaFichero;
+	public int getNumRep() {
+		return numRep;
 	}
 
-	public void setRutaFichero(String rutaFichero) {
-		this.rutaFichero = rutaFichero;
+	public int getCodigo() {
+		return codigo;
 	}
 
-	public int getNumReproducciones() {
-		return numReproducciones;
+	public void setCodigo(int codigo) {
+		this.codigo = codigo;
 	}
 
-	public void setNumReproducciones(int numReproducciones) {
-		this.numReproducciones = numReproducciones;
+	public Set<Etiqueta> getEtiquetas() {
+		return etiquetas;
 	}
 
-	public String getInterprete() {
-		return interprete;
+	public String getUrl() {
+		return url;
 	}
 
-	public void setInterprete(String interprete) {
-		this.interprete = interprete;
+	public boolean contieneEtiquetas(List<String> etiquetasSelecionadas) {
+		for(Etiqueta e: this.etiquetas) {
+			if(etiquetasSelecionadas.contains(e.getNombre())) return true;
+		}
+		return false;
 	}
-
-	public String getEstilo() {
-		return estilo;
-	}
-
-	public void setEstilo(String estilo) {
-		this.estilo = estilo;
-	}
-
 	
+	public boolean contieneEtiqueta(String s) {
+		for(Etiqueta e: this.etiquetas) {
+			if(e.getNombre().equals(s)) return true;
+		}
+		return false;
+	}
+	
+	public int compareTo(Cancion c) {
+		return c.getNumRep() - this.numRep;
+	}
+		
 }
