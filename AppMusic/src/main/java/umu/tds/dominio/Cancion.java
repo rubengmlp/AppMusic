@@ -10,24 +10,20 @@ public class Cancion {
 	private int numRep;
 	private int codigo;
 	private final String url;
-	private Set<Etiqueta> etiquetas = new HashSet<Etiqueta>();
+	private List<String> estilosMusicales;
 
-	public Cancion (String titulo, int numRepro, String url, Etiqueta... e) {
+	public Cancion (String titulo, int numRepro, int codigo, String url, List<String> estilos) {
 		this.titulo = titulo;
 		this.numRep =  numRepro;
 		this.url = url;
-		for(Etiqueta i : e) {
-			etiquetas.add(i);
-		}
+		this.estilosMusicales = estilos;
 	}
 
-	public Cancion(String titulo, int numRepro, String url, List<Etiqueta> e) {
+	public Cancion(String titulo, int numRepro, String url, List<String> estilos) {
 		this.titulo = titulo;
 		this.numRep =  numRepro;
 		this.url = url;
-		for(Etiqueta i : e) {
-			etiquetas.add(i);
-		}
+		this.estilosMusicales = estilos;
 	}
 
 	public Cancion (String titulo, int numRepro, String url) {
@@ -40,9 +36,6 @@ public class Cancion {
 		this.numRep++;
 	}
 
-	public void addEtiqueta(Etiqueta e) {
-		this.etiquetas.add(e);
-	}
 
 	public String getTitulo() {
 		return titulo;
@@ -64,27 +57,24 @@ public class Cancion {
 		this.codigo = codigo;
 	}
 
-	public Set<Etiqueta> getEtiquetas() {
-		return etiquetas;
-	}
 
 	public String getUrl() {
 		return url;
 	}
 
-	public boolean contieneEtiquetas(List<String> etiquetasSelecionadas) {
-		for(Etiqueta e: this.etiquetas) {
-			if(etiquetasSelecionadas.contains(e.getNombre())) return true;
-		}
-		return false;
-	}
+//	public boolean contieneEtiquetas(List<String> etiquetasSelecionadas) {
+//		for( e: this.etiquetas) {
+//			if(etiquetasSelecionadas.contains(e.getNombre())) return true;
+//		}
+//		return false;
+//	}
 	
-	public boolean contieneEtiqueta(String s) {
-		for(Etiqueta e: this.etiquetas) {
-			if(e.getNombre().equals(s)) return true;
-		}
-		return false;
-	}
+//	public boolean contieneEtiqueta(String s) {
+//		for(Etiqueta e: this.etiquetas) {
+//			if(e.getNombre().equals(s)) return true;
+//		}
+//		return false;
+//	}
 	
 	public int compareTo(Cancion c) {
 		return c.getNumRep() - this.numRep;

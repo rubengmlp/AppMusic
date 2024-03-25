@@ -23,6 +23,9 @@ import javax.swing.JSeparator;
 import java.awt.Color;
 import javax.swing.border.TitledBorder;
 import java.awt.CardLayout;
+import java.awt.GridLayout;
+import javax.swing.JList;
+import javax.swing.AbstractListModel;
 
 public class VistaPrincipal extends JFrame {
 
@@ -68,7 +71,7 @@ public class VistaPrincipal extends JFrame {
 		gbl_panel.columnWidths = new int[]{89, 0};
 		gbl_panel.rowHeights = new int[]{20, 23, 0, 20, 0, 0, 20, 0, 0, 20, 0, 20, 0};
 		gbl_panel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gbl_panel.rowWeights = new double[]{0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gbl_panel.rowWeights = new double[]{0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
 		
 		JPanel panel_3 = new JPanel();
@@ -131,6 +134,26 @@ public class VistaPrincipal extends JFrame {
 		JButton btnNewButton_2 = new JButton("Mis playlists");
 		panel_6.add(btnNewButton_2);
 		
+		JPanel panel_7 = new JPanel();
+		GridBagConstraints gbc_panel_7 = new GridBagConstraints();
+		gbc_panel_7.fill = GridBagConstraints.BOTH;
+		gbc_panel_7.gridx = 0;
+		gbc_panel_7.gridy = 11;
+		panel.add(panel_7, gbc_panel_7);
+		panel_7.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		JList list = new JList();
+		list.setModel(new AbstractListModel() {
+			String[] values = new String[] {"Lista 1 ", "Lista 2", "Lista 3"};
+			public int getSize() {
+				return values.length;
+			}
+			public Object getElementAt(int index) {
+				return values[index];
+			}
+		});
+		panel_7.add(list);
+		
 		JPanel panel_1 = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) panel_1.getLayout();
 		flowLayout.setAlignment(FlowLayout.RIGHT);
@@ -151,10 +174,11 @@ public class VistaPrincipal extends JFrame {
 		contentPane.add(panel_2, BorderLayout.CENTER);
 		panel_2.setLayout(new CardLayout(0, 0));
 		
-		JSeparator separator = new JSeparator();
-		separator.setForeground(new Color(0, 0, 0));
-		separator.setOrientation(SwingConstants.VERTICAL);
-		panel_2.add(separator, "name_515236240046300");
+		JPanel panel_buscar = new JPanel();
+		panel_2.add(panel_buscar, "name_545149146535099");
+		
+		JPanel panel_recientes = new JPanel();
+		panel_2.add(panel_recientes, "name_545151512970900");
 	}
 
 }

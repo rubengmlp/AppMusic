@@ -3,18 +3,18 @@ package umu.tds.dominio;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Playlist {
+public class PlayList {
 
 	private int codigo;
 	private final String nombre;
 	private LinkedList<Cancion> canciones;
 
-	public Playlist(String nombre) {
+	public PlayList(String nombre) {
 		this.nombre = nombre;
 		this.canciones = new LinkedList<Cancion>();
 	}
 
-	public Playlist(String nombre, List<Cancion> lista) {
+	public PlayList(String nombre, List<Cancion> lista) {
 		this.nombre = nombre;
 		this.canciones = (LinkedList<Cancion>) lista;
 	}
