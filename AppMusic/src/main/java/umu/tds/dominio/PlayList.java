@@ -4,7 +4,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class PlayList {
-
 	private int codigo;
 	private final String nombre;
 	private LinkedList<Cancion> canciones;

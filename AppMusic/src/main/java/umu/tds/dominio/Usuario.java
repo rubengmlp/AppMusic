@@ -3,6 +3,7 @@ package umu.tds.dominio;
 import java.util.List;
 
 public class Usuario {
+	private int codigo;
 	private String nombre;
 	private boolean premium;
 	private List<PlayList> playLists;
@@ -42,6 +43,14 @@ public class Usuario {
 
 	public void setCancionesRecientes(List<Cancion> cancionesRecientes) {
 		this.cancionesRecientes = cancionesRecientes;
+	}
+
+	public int getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(int codigo) {
+		this.codigo = codigo;
 	}
 	
 	

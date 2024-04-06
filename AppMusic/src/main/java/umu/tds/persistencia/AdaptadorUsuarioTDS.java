@@ -2,6 +2,7 @@ package umu.tds.persistencia;
 
 import java.util.List;
 
+import beans.Entidad;
 import tds.driver.FactoriaServicioPersistencia;
 import tds.driver.ServicioPersistencia;
 import umu.tds.dominio.Usuario;
@@ -30,8 +31,9 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 
 	@Override
 	public void borrarUsuario(Usuario usuario) {
-		// TODO Auto-generated method stub
+		Entidad eUsuario = servPersistencia.recuperarEntidad(usuario.getCodigo());
 		
+		servPersistencia.borrarEntidad(eUsuario);
 	}
 
 	@Override

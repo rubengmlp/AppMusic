@@ -2,6 +2,7 @@ package umu.tds.persistencia;
 
 import java.util.List;
 
+import beans.Entidad;
 import tds.driver.FactoriaServicioPersistencia;
 import tds.driver.ServicioPersistencia;
 import umu.tds.dominio.EstiloMusical;
@@ -24,14 +25,16 @@ public class AdaptadorEstiloMusicalTDS implements IAdaptadorEstiloMusicalDAO {
     }
 
 	@Override
-	public void registrarEstiloMusical(EstiloMusical EstiloMusical) {
+	public void registrarEstiloMusical(EstiloMusical estiloMusical) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void borrarEstiloMusical(EstiloMusical EstiloMusical) {
-		// TODO Auto-generated method stub
+	public void borrarEstiloMusical(EstiloMusical estiloMusical) {
+		Entidad eEstiloMusical = servPersistencia.recuperarEntidad(estiloMusical.getCodigo());
+		
+		servPersistencia.borrarEntidad(eEstiloMusical);
 		
 	}
 
@@ -52,4 +55,6 @@ public class AdaptadorEstiloMusicalTDS implements IAdaptadorEstiloMusicalDAO {
 		// TODO Auto-generated method stub
 		
 	}
+
+
 }

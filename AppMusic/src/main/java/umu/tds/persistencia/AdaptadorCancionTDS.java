@@ -2,7 +2,7 @@ package umu.tds.persistencia;
 
 import java.util.List;
 
-import umu.tds.persistencia.AdaptadorCancionTDS;
+import beans.Entidad;
 import tds.driver.FactoriaServicioPersistencia;
 import tds.driver.ServicioPersistencia;
 import umu.tds.dominio.Cancion;
@@ -30,7 +30,9 @@ public class AdaptadorCancionTDS implements IAdaptadorCancionDAO {
 
 	@Override
 	public void borrarCancion(Cancion cancion) {
-		// TODO Auto-generated method stub
+		Entidad eCancion = servPersistencia.recuperarEntidad(cancion.getCodigo());
+		
+		servPersistencia.borrarEntidad(eCancion);
 
 	}
 

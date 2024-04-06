@@ -2,6 +2,7 @@ package umu.tds.persistencia;
 
 import java.util.List;
 
+import beans.Entidad;
 import tds.driver.FactoriaServicioPersistencia;
 import tds.driver.ServicioPersistencia;
 import umu.tds.dominio.PlayList;
@@ -24,19 +25,21 @@ public class AdaptadorPlayListTDS implements IAdaptadorPlayListDAO {
     }
 
 	@Override
-	public void registrarPlayList(PlayList listaCancion) {
+	public void registrarPlayList(PlayList playList) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void borrarPlayList(PlayList listaCancion) {
-		// TODO Auto-generated method stub
+	public void borrarPlayList(PlayList playList) {
+		Entidad ePlayList = servPersistencia.recuperarEntidad(playList.getCodigo());
+		
+		servPersistencia.borrarEntidad(ePlayList);
 		
 	}
 
 	@Override
-	public void modificarPlayList(PlayList listaCancion) {
+	public void modificarPlayList(PlayList playList) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -58,5 +61,7 @@ public class AdaptadorPlayListTDS implements IAdaptadorPlayListDAO {
 		// TODO Auto-generated method stub
 		
 	}
+
+
 }
 

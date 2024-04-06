@@ -6,8 +6,8 @@ import umu.tds.dominio.EstiloMusical;
 
 public interface IAdaptadorEstiloMusicalDAO {
 	
-	public void registrarEstiloMusical(EstiloMusical EstiloMusical);
-	public void borrarEstiloMusical(EstiloMusical EstiloMusical);
+	public void registrarEstiloMusical(EstiloMusical estiloMusical);
+	public void borrarEstiloMusical(EstiloMusical estiloMusical);
 	public EstiloMusical recuperarEstiloMusical(int codigo);
 	public List<EstiloMusical> recuperarTodasEstiloMusicals();
 	public void borrarTodasEstiloMusicals();

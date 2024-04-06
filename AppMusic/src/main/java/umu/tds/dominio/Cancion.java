@@ -1,14 +1,12 @@
 package umu.tds.dominio;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+
 
 public class Cancion {
-
+	private int codigo;
 	private String titulo;
 	private int numRep;
-	private int codigo;
 	private final String url;
 	private List<String> estilosMusicales;
 
@@ -79,5 +77,18 @@ public class Cancion {
 	public int compareTo(Cancion c) {
 		return c.getNumRep() - this.numRep;
 	}
-		
+
+	public List<String> getEstilosMusicales() {
+		return estilosMusicales;
+	}
+
+	public void setEstilosMusicales(List<String> estilosMusicales) {
+		this.estilosMusicales = estilosMusicales;
+	}
+
+	public void setNumRep(int numRep) {
+		this.numRep = numRep;
+	}
+	
+	
 }
