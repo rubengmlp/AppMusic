@@ -4,7 +4,7 @@ import java.util.List;
 
 import umu.tds.dominio.PlayList;
 
-public interface IAdaptadorListaCancionDAO {
+public interface IAdaptadorPlayListDAO {
 	
 	public void registrarPlayList(PlayList listaCancion);
 	public void borrarPlayList(PlayList listaCancion);
