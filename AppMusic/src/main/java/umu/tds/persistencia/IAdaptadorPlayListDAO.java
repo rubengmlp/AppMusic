@@ -10,8 +10,7 @@ public interface IAdaptadorPlayListDAO {
 	public void borrarPlayList(PlayList playList);
 	public void modificarPlayList(PlayList playList);
 	public PlayList recuperarPlayList(int codigo);
-	public List<PlayList> recuperarTodasListas();
-	public void borrarTodasPlayList();
+	public List<PlayList> recuperarTodasPlayList();
 	
 }
 

@@ -10,13 +10,6 @@ public class Cancion {
 	private final String url;
 	private List<String> estilosMusicales;
 
-	public Cancion (String titulo, int numRepro, int codigo, String url, List<String> estilos) {
-		this.titulo = titulo;
-		this.numRep =  numRepro;
-		this.url = url;
-		this.estilosMusicales = estilos;
-	}
-
 	public Cancion(String titulo, int numRepro, String url, List<String> estilos) {
 		this.titulo = titulo;
 		this.numRep =  numRepro;
