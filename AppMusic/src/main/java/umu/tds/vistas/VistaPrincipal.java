@@ -26,6 +26,7 @@ import java.awt.CardLayout;
 import java.awt.GridLayout;
 import javax.swing.JList;
 import javax.swing.AbstractListModel;
+import tds.CargadorCanciones.CargadorCanciones;
 
 public class VistaPrincipal extends JFrame {
 
