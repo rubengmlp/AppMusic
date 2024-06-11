@@ -47,6 +47,7 @@ public class AdaptadorCancionTDS implements IAdaptadorCancionDAO {
 	            Arrays.asList(new Propiedad("titulo", cancion.getTitulo()),
 	                          new Propiedad("numRep", String.valueOf(cancion.getNumRep())),
 	                          new Propiedad("url", cancion.getUrl()),
+	                          new Propiedad("interprete", cancion.getInterprete()),
 	                          new Propiedad("estilosMusicales", obtenerEstilosMusicalesString(cancion.getEstilosMusicales())))));
 
 	    // Registrar entidad canción
@@ -85,7 +86,6 @@ public class AdaptadorCancionTDS implements IAdaptadorCancionDAO {
 	        servPersistencia.modificarPropiedad(prop);
 	    }
 	}
-
 
 	@Override
 	public Cancion recuperarCancion(int codigo) {

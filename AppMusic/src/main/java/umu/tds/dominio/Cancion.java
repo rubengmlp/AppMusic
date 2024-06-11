@@ -8,19 +8,26 @@ public class Cancion {
 	private String titulo;
 	private int numRep;
 	private final String url;
+	private String interprete;
+	private boolean esFavorita = false;
 	private List<String> estilosMusicales;
 
-	public Cancion(String titulo, int numRepro, String url, List<String> estilos) {
+	public Cancion(String titulo, int numRepro, String url, String interprete, boolean esFavorita, List<String> estilos) {
 		this.titulo = titulo;
 		this.numRep =  numRepro;
 		this.url = url;
+		this.interprete = interprete;
+		this.esFavorita = esFavorita;
 		this.estilosMusicales = estilos;
 	}
 
-	public Cancion (String titulo, int numRepro, String url) {
+	public Cancion (String titulo, int numRepro, String url, String interprete, boolean esFavorita) {
 		this.titulo = titulo;
 		this.numRep =  numRepro;
 		this.url = url;
+		this.interprete = interprete;
+		this.esFavorita = esFavorita;
+		
 	}
 
 	public void addReproduccion() {
@@ -52,20 +59,6 @@ public class Cancion {
 	public String getUrl() {
 		return url;
 	}
-
-//	public boolean contieneEtiquetas(List<String> etiquetasSelecionadas) {
-//		for( e: this.etiquetas) {
-//			if(etiquetasSelecionadas.contains(e.getNombre())) return true;
-//		}
-//		return false;
-//	}
-	
-//	public boolean contieneEtiqueta(String s) {
-//		for(Etiqueta e: this.etiquetas) {
-//			if(e.getNombre().equals(s)) return true;
-//		}
-//		return false;
-//	}
 	
 	public int compareTo(Cancion c) {
 		return c.getNumRep() - this.numRep;
@@ -83,5 +76,17 @@ public class Cancion {
 		this.numRep = numRep;
 	}
 	
+	public String getInterprete() {
+		return interprete;
+	}
+
+	public boolean isEsFavorita() {
+		return esFavorita;
+	}
+
+	public void setEsFavorita(boolean esFavorita) {
+		this.esFavorita = esFavorita;
+	}
+
 	
 }

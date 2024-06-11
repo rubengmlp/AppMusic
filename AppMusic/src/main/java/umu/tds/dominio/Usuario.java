@@ -1,16 +1,31 @@
 package umu.tds.dominio;
 
+import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Usuario {
 	private int codigo;
 	private String nombre;
+	private String apellido;
+	private String email;
+	private Date fecha;
+	private String contrasena;
 	private boolean premium;
 	private List<PlayList> playLists;
 	private List<Cancion> cancionesRecientes;
 
-	public Usuario(String nombre) {
-
+	public Usuario(String nombre, String apellido, String correo, Date fecha, String contra) {
+		this.codigo = 0;
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.email = correo;
+		this.fecha = fecha;
+		this.contrasena = contra;
+		this.premium = false;
+		this.playLists = new LinkedList<PlayList>();
+		this.cancionesRecientes = new LinkedList<Cancion>();
+		
 	}
 
 	public String getNombre() {
@@ -52,6 +67,39 @@ public class Usuario {
 	public void setCodigo(int codigo) {
 		this.codigo = codigo;
 	}
+
+	public String getApellido() {
+		return apellido;
+	}
+
+	public void setApellido(String apellido) {
+		this.apellido = apellido;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public Date getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
+
+	public String getContrasena() {
+		return contrasena;
+	}
+
+	public void setContrasena(String contrasena) {
+		this.contrasena = contrasena;
+	}
+	
 	
 	
 
