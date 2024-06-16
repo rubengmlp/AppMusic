@@ -4,14 +4,18 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import umu.tds.dominio.descuentos.IDescuento;
+
 public class Usuario {
 	private int codigo;
+	private String username;
 	private String nombre;
-	private String apellido;
+	private String apellidos;
 	private String email;
 	private Date fecha;
 	private String contrasena;
 	private boolean premium;
+	private IDescuento descuento;
 	private List<PlayList> playLists;
 	private List<Cancion> cancionesRecientes;
 
