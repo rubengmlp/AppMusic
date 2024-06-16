@@ -32,7 +32,7 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 	
 	public AdaptadorUsuarioTDS() {
 		servPersistencia = FactoriaServicioPersistencia.getInstance().getServicioPersistencia();
-		dateFormat = new SimpleDateFormat("dd/MM/yyyy")
+		dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 	}
 
 	@Override

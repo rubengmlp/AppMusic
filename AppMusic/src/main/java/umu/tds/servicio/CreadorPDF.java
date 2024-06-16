@@ -18,11 +18,7 @@ import umu.tds.dominio.Cancion;
 import umu.tds.dominio.PlayList;
 import umu.tds.dominio.Usuario;
 
-/**
- * Generador de pdf con la lista de canciones de un usuario.
- * 
- * @author Beatriz y Francisco
- */
+
 public class CreadorPDF {
 	private static final String DIRECTORIO_PDF = "./pdf";
 	
