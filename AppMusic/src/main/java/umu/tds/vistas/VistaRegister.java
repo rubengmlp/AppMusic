@@ -1,31 +1,27 @@
 package umu.tds.vistas;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import java.awt.GridBagLayout;
-import javax.swing.JLabel;
-import java.awt.GridBagConstraints;
-import javax.swing.JTextField;
-import java.awt.Insets;
-import javax.swing.JPasswordField;
-import java.awt.FlowLayout;
-import javax.swing.BoxLayout;
-import com.toedter.calendar.JDateChooser;
-import javax.swing.JButton;
 import java.awt.Component;
-import java.awt.GridLayout;
-import javax.swing.SwingConstants;
+import java.awt.EventQueue;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.Font;
-import javax.swing.ImageIcon;
-import java.awt.Toolkit;
+import javax.swing.border.EmptyBorder;
+import com.toedter.calendar.JDateChooser;
 
 public class VistaRegister extends JFrame {
 
@@ -142,6 +138,9 @@ public class VistaRegister extends JFrame {
 		gbc_panel_3.gridx = 2;
 		gbc_panel_3.gridy = 5;
 		contentPane.add(panel_3, gbc_panel_3);
+		
+		JDateChooser dateChooser_1 = new JDateChooser();
+		panel_3.add(dateChooser_1);
 		
 		JLabel lblNewLabel_3 = new JLabel("Fecha de nacimiento ");
 		panel_3.add(lblNewLabel_3);

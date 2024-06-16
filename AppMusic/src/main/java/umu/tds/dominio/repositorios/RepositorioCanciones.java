@@ -1,4 +1,4 @@
-package umu.tds.dominio;
+package umu.tds.dominio.repositorios;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import umu.tds.dominio.Cancion;
 import umu.tds.persistencia.DAOException;
 import umu.tds.persistencia.FactoriaDAO;
 import umu.tds.persistencia.IAdaptadorCancionDAO;

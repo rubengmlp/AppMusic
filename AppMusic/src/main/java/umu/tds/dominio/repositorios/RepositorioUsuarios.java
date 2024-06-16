@@ -1,4 +1,4 @@
-package umu.tds.dominio;
+package umu.tds.dominio.repositorios;
 
 import java.util.ArrayList;
 import java.util.HashMap;

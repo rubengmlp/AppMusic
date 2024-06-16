@@ -9,25 +9,21 @@ public class Cancion {
 	private int numRep;
 	private final String url;
 	private String interprete;
-	private boolean esFavorita = false;
 	private List<String> estilosMusicales;
 
-	public Cancion(String titulo, int numRepro, String url, String interprete, boolean esFavorita, List<String> estilos) {
+	public Cancion(String titulo, int numRepro, String url, String interprete, List<String> estilos) {
 		this.titulo = titulo;
 		this.numRep =  numRepro;
 		this.url = url;
 		this.interprete = interprete;
-		this.esFavorita = esFavorita;
 		this.estilosMusicales = estilos;
 	}
 
-	public Cancion (String titulo, int numRepro, String url, String interprete, boolean esFavorita) {
+	public Cancion (String titulo, int numRepro, String url, String interprete) {
 		this.titulo = titulo;
 		this.numRep =  numRepro;
 		this.url = url;
 		this.interprete = interprete;
-		this.esFavorita = esFavorita;
-		
 	}
 
 	public void addReproduccion() {
@@ -80,13 +76,6 @@ public class Cancion {
 		return interprete;
 	}
 
-	public boolean isEsFavorita() {
-		return esFavorita;
-	}
-
-	public void setEsFavorita(boolean esFavorita) {
-		this.esFavorita = esFavorita;
-	}
 
 	
 }

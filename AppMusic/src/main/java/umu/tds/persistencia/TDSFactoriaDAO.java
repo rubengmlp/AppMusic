@@ -11,20 +11,17 @@ public class TDSFactoriaDAO extends FactoriaDAO {
 
 	@Override
 	public IAdaptadorCancionDAO getCancionDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return AdaptadorCancionTDS.getUnicaInstancia();
 	}
 
 	@Override
 	public IAdaptadorEstiloMusicalDAO getEstiloMusicalDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return AdaptadorEstiloMusicalTDS.getUnicaInstancia();
 	}
 
 	@Override
 	public IAdaptadorPlayListDAO getPlayListDAO() {
-		// TODO Auto-generated method stub
-		return null;
+		return AdaptadorPlayListTDS.getUnicaInstancia();
 	}
 
 

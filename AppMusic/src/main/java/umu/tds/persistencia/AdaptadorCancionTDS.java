@@ -77,6 +77,8 @@ public class AdaptadorCancionTDS implements IAdaptadorCancionDAO {
 	            prop.setValor(Integer.toString(cancion.getNumRep()));
 	        } else if (prop.getNombre().equals("url")) {
 	            prop.setValor(cancion.getUrl());
+	        } else if (prop.getNombre().equals("interprete")) {
+	        	prop.setValor(cancion.getInterprete());
 	        } else if (prop.getNombre().equals("estilosMusicales")) {
 	            // Convertir la lista de estilos musicales a una cadena separada por comas
 	            String estilosMusicales = String.join(",", cancion.getEstilosMusicales());
@@ -98,6 +100,7 @@ public class AdaptadorCancionTDS implements IAdaptadorCancionDAO {
 	    String titulo;
 	    int numRep;
 	    String url;
+	    String interprete;
 	    List<String> estilosMusicales;
 
 	    // Recuperar entidad
@@ -107,11 +110,12 @@ public class AdaptadorCancionTDS implements IAdaptadorCancionDAO {
 	    titulo = servPersistencia.recuperarPropiedadEntidad(eCancion, "titulo");
 	    numRep = Integer.parseInt(servPersistencia.recuperarPropiedadEntidad(eCancion, "numRep"));
 	    url = servPersistencia.recuperarPropiedadEntidad(eCancion, "url");
+	    interprete = servPersistencia.recuperarPropiedadEntidad(eCancion, "interprete");
 
 	    // Recuperar propiedades que son objetos
 	    estilosMusicales = obtenerEstilosMusicales(servPersistencia.recuperarPropiedadEntidad(eCancion, "estilosMusicales"));
 
-	    Cancion cancion = new Cancion(titulo, numRep, url, estilosMusicales);
+	    Cancion cancion = new Cancion(titulo, numRep, url, interprete, estilosMusicales);
 	    cancion.setCodigo(codigo);
 
 	    // IMPORTANTE: añadir la canción al pool antes de devolverla

@@ -10,7 +10,6 @@ public class FiltroCanciones {
                 .filter(c -> (titulo == null || c.getTitulo().toLowerCase().contains(titulo.toLowerCase())))
                 .filter(c -> (interprete == null || c.getInterprete().toLowerCase().contains(interprete.toLowerCase())))
                 .filter(c -> (estiloMusical == null || c.getEstilosMusicales().contains(estiloMusical.toLowerCase())))
-                .filter(c -> (esFavorita == null || c.isEsFavorita() == esFavorita))
                 .collect(Collectors.toList());
     }
 
