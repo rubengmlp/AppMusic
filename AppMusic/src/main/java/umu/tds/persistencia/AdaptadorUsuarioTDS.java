@@ -1,13 +1,11 @@
 package umu.tds.persistencia;
 
+import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-
 import java.util.Arrays;
 import java.util.List;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.StringTokenizer;
 
 import beans.Entidad;
@@ -20,7 +18,7 @@ import umu.tds.dominio.Usuario;
 
 public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 	private static ServicioPersistencia servPersistencia;
-	private SimpleDateFormat dateFormat;
+	private DateTimeFormatter dateFormat;
 	private static AdaptadorUsuarioTDS unicaInstancia;
 	
 	public static AdaptadorUsuarioTDS getUnicaInstancia() {
@@ -32,7 +30,7 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 	
 	public AdaptadorUsuarioTDS() {
 		servPersistencia = FactoriaServicioPersistencia.getInstance().getServicioPersistencia();
-		dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		 dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	}
 
 	@Override
@@ -56,8 +54,9 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 	    
 	    // Crear propiedades para el usuario y asignarles valores
 	    entidadUsuario.setPropiedades(Arrays.asList(
+	    	new Propiedad("username", usuario.getUsername()),
 	        new Propiedad("nombre", usuario.getNombre()),
-	        new Propiedad("apellidos", usuario.getApellido()),
+	        new Propiedad("apellidos", usuario.getApellidos()),
 	        new Propiedad("fechaNacimiento",dateFormat.format(usuario.getFecha())),
 			new Propiedad("email", usuario.getEmail()),
 			new Propiedad("contraseña", usuario.getContrasena()),
@@ -93,11 +92,21 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 
 	    // Actualizar las propiedades de la entidad con la información del usuario
 	    for (Propiedad prop : eUsuario.getPropiedades()) {
-	        if (prop.getNombre().equals("nombre")) {
+	        if (prop.getNombre().equals("username")) {
+	            prop.setValor(usuario.getUsername());
+	        } else if (prop.getNombre().equals("nombre")) {
 	            prop.setValor(usuario.getNombre());
+	        } else if (prop.getNombre().equals("apellidos")) {
+	            prop.setValor(usuario.getApellidos());
+	        } else if (prop.getNombre().equals("fechaNacimiento")) {
+	            prop.setValor(dateFormat.format(usuario.getFecha()));
+	        } else if (prop.getNombre().equals("email")) {
+	            prop.setValor(usuario.getEmail());
+	        } else if (prop.getNombre().equals("contraseña")) {
+	            prop.setValor(usuario.getContrasena());
 	        } else if (prop.getNombre().equals("premium")) {
 	            prop.setValor(String.valueOf(usuario.isPremium()));
-	        } else if (prop.getNombre().equals("playLists")) {
+	        } else if (prop.getNombre().equals("playlists")) {
 	            String codigosPlayLists = obtenerCodigosPlayLists(usuario.getPlayLists());
 	            prop.setValor(codigosPlayLists);
 	        } else if (prop.getNombre().equals("cancionesRecientes")) {
@@ -124,23 +133,17 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 	    eUsuario = servPersistencia.recuperarEntidad(codigo);
 
 	    // Recuperar propiedades que no son objetos
+	    String username = servPersistencia.recuperarPropiedadEntidad(eUsuario, "username");
 	    String nombre = servPersistencia.recuperarPropiedadEntidad(eUsuario, "nombre");
-	    String apellido = servPersistencia.recuperarPropiedadEntidad(eUsuario, "apellidos");
-		Date fecha = null;
-		try {
-			fecha = dateFormat.parse(servPersistencia.recuperarPropiedadEntidad(eUsuario, "fechaNacimiento"));
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+	    String apellidos = servPersistencia.recuperarPropiedadEntidad(eUsuario, "apellidos");
+	    LocalDate fecha = LocalDate.parse(servPersistencia.recuperarPropiedadEntidad(eUsuario, "fechaNacimiento"), dateFormat);
 		String email = servPersistencia.recuperarPropiedadEntidad(eUsuario, "email");
-		//String id = servPersistencia.recuperarPropiedadEntidad(eUsuario, "usuID");
+		
 		String contrasena = servPersistencia.recuperarPropiedadEntidad(eUsuario, "password");
-		//String filtro = servPersistencia.recuperarPropiedadEntidad(eUsuario, "filtro");
-		boolean premium = Boolean.valueOf(servPersistencia.recuperarPropiedadEntidad(eUsuario, "premium"));
-		AdaptadorPlayListTDS adaptadorP = AdaptadorPlayListTDS.getUnicaInstancia();
-		//PlayList recientes = adaptadorP.recuperarPlayList(Integer.valueOf(servPersistencia.recuperarPropiedadEntidad(eUsuario, "recientes")));
 
-	    Usuario usuario = new Usuario(nombre, apellido, email, fecha, contrasena);
+		boolean premium = Boolean.valueOf(servPersistencia.recuperarPropiedadEntidad(eUsuario, "premium"));
+
+	    Usuario usuario = new Usuario (username, nombre, apellidos, email, fecha, contrasena);
 	    usuario.setCodigo(codigo);
 	    usuario.setPremium(premium);
 
