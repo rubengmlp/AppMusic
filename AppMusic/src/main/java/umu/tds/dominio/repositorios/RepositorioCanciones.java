@@ -1,10 +1,11 @@
 package umu.tds.dominio.repositorios;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import umu.tds.dominio.Cancion;
 import umu.tds.persistencia.DAOException;
@@ -70,19 +71,11 @@ public class RepositorioCanciones {
 	}
 
 	public List<Cancion> obtenerTopDiez() {
-		LinkedList<Cancion> topDiez = new LinkedList<Cancion>();
-		for(Cancion c: this.canciones.values()) {
-			topDiez.add(c);
-			//Collections.sort(topDiez);
-			if(topDiez.size() == 11) {
-				topDiez.removeLast();
-			}
-		}
-		
-		return topDiez;
+		return canciones.values().stream()
+				.sorted(Comparator.comparingInt(Cancion::getNumRep).reversed())
+				.limit(10)
+				.collect(Collectors.toList());
 	}
-
-	
 }
 
 

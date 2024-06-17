@@ -1,7 +1,5 @@
 package umu.tds.dominio;
 
-import java.util.List;
-
 
 public class Cancion {
 	private int codigo;
@@ -9,14 +7,14 @@ public class Cancion {
 	private int numRep;
 	private final String url;
 	private String interprete;
-	private List<String> estilosMusicales;
+	private String estilo;
 
-	public Cancion(String titulo, int numRepro, String url, String interprete, List<String> estilos) {
+	public Cancion(String titulo, int numRepro, String url, String interprete, String estilo) {
 		this.titulo = titulo;
 		this.numRep =  numRepro;
 		this.url = url;
 		this.interprete = interprete;
-		this.estilosMusicales = estilos;
+		this.estilo = estilo;
 	}
 
 	public Cancion (String titulo, int numRepro, String url, String interprete) {
@@ -60,12 +58,16 @@ public class Cancion {
 		return c.getNumRep() - this.numRep;
 	}
 
-	public List<String> getEstilosMusicales() {
-		return estilosMusicales;
+	public String getEstilo() {
+		return estilo;
 	}
 
-	public void setEstilosMusicales(List<String> estilosMusicales) {
-		this.estilosMusicales = estilosMusicales;
+	public void setEstilo(String estilo) {
+		this.estilo = estilo;
+	}
+
+	public void setInterprete(String interprete) {
+		this.interprete = interprete;
 	}
 
 	public void setNumRep(int numRep) {

@@ -142,5 +142,8 @@ public class Usuario {
 			return new DescuentoNulo();		
 	}
 	
+	public void addCancionReciente(Cancion cancion) {
+		this.cancionesRecientes.add(cancion);
+	}
 
 }

@@ -48,7 +48,7 @@ public class AdaptadorCancionTDS implements IAdaptadorCancionDAO {
 	                          new Propiedad("numRep", String.valueOf(cancion.getNumRep())),
 	                          new Propiedad("url", cancion.getUrl()),
 	                          new Propiedad("interprete", cancion.getInterprete()),
-	                          new Propiedad("estilosMusicales", obtenerEstilosMusicalesString(cancion.getEstilosMusicales())))));
+	                          new Propiedad("estilo", cancion.getEstilo()))));
 
 	    // Registrar entidad canción
 	    eCancion = servPersistencia.registrarEntidad(eCancion);
@@ -79,10 +79,8 @@ public class AdaptadorCancionTDS implements IAdaptadorCancionDAO {
 	            prop.setValor(cancion.getUrl());
 	        } else if (prop.getNombre().equals("interprete")) {
 	        	prop.setValor(cancion.getInterprete());
-	        } else if (prop.getNombre().equals("estilosMusicales")) {
-	            // Convertir la lista de estilos musicales a una cadena separada por comas
-	            String estilosMusicales = String.join(",", cancion.getEstilosMusicales());
-	            prop.setValor(estilosMusicales);
+	        } else if (prop.getNombre().equals("estilo")) {
+	            prop.setValor(cancion.getEstilo());
 	        }
 	        // Actualizar la propiedad en la base de datos
 	        servPersistencia.modificarPropiedad(prop);
@@ -101,7 +99,7 @@ public class AdaptadorCancionTDS implements IAdaptadorCancionDAO {
 	    int numRep;
 	    String url;
 	    String interprete;
-	    List<String> estilosMusicales;
+	    String estilo;
 
 	    // Recuperar entidad
 	    eCancion = servPersistencia.recuperarEntidad(codigo);
@@ -111,11 +109,9 @@ public class AdaptadorCancionTDS implements IAdaptadorCancionDAO {
 	    numRep = Integer.parseInt(servPersistencia.recuperarPropiedadEntidad(eCancion, "numRep"));
 	    url = servPersistencia.recuperarPropiedadEntidad(eCancion, "url");
 	    interprete = servPersistencia.recuperarPropiedadEntidad(eCancion, "interprete");
+	    estilo = servPersistencia.recuperarPropiedadEntidad(eCancion, "estilo");
 
-	    // Recuperar propiedades que son objetos
-	    estilosMusicales = obtenerEstilosMusicales(servPersistencia.recuperarPropiedadEntidad(eCancion, "estilosMusicales"));
-
-	    Cancion cancion = new Cancion(titulo, numRep, url, interprete, estilosMusicales);
+	    Cancion cancion = new Cancion(titulo, numRep, url, interprete, estilo);
 	    cancion.setCodigo(codigo);
 
 	    // IMPORTANTE: añadir la canción al pool antes de devolverla
@@ -141,28 +137,6 @@ public class AdaptadorCancionTDS implements IAdaptadorCancionDAO {
 	    }
 
 	    return canciones;
-	}
-
-	// -------------------Funciones auxiliares-----------------------------
-	
-	private List<String> obtenerEstilosMusicales(String estilosMusicalesString) {
-	    List<String> estilosMusicales = new LinkedList<>();
-	    StringTokenizer tokenizer = new StringTokenizer(estilosMusicalesString, ",");
-	    
-	    while (tokenizer.hasMoreTokens()) {
-	        estilosMusicales.add(tokenizer.nextToken().trim());
-	    }
-	    
-	    return estilosMusicales;
-	}
-	
-	// Función auxiliar para convertir la lista de estilos musicales en una cadena separada por comas
-	private String obtenerEstilosMusicalesString(List<String> estilosMusicales) {
-	    StringBuilder stringBuilder = new StringBuilder();
-	    for (String estilo : estilosMusicales) {
-	        stringBuilder.append(estilo).append(",");
-	    }
-	    return stringBuilder.toString().replaceAll(",$", ""); // Eliminar la última coma si existe
 	}
 
 

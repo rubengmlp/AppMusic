@@ -47,7 +47,7 @@ public class CreadorPDF {
         for (Cancion cancion : lista.getCanciones()) {
             tabla.addCell(new PdfPCell(new Paragraph(cancion.getTitulo())));
             tabla.addCell(new PdfPCell(new Paragraph(cancion.getInterprete())));
-            tabla.addCell(new PdfPCell(new Paragraph(String.join(", ", cancion.getEstilosMusicales()))));
+            tabla.addCell(new PdfPCell(new Paragraph(cancion.getEstilo())));
         }
         return tabla;
     }

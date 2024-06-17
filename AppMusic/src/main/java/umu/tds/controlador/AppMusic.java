@@ -1,11 +1,15 @@
 package umu.tds.controlador;
 
+import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import tds.CargadorCanciones.CancionesEvent;
+import tds.CargadorCanciones.CargadorCanciones;
+import tds.CargadorCanciones.ICargadoListener;
 import umu.tds.dominio.Cancion;
 import umu.tds.dominio.PlayList;
 import umu.tds.dominio.Usuario;
@@ -19,7 +23,7 @@ import umu.tds.persistencia.IAdaptadorEstiloMusicalDAO;
 import umu.tds.persistencia.IAdaptadorPlayListDAO;
 import umu.tds.persistencia.IAdaptadorUsuarioDAO;
 
-public class AppMusic {
+public class AppMusic implements ICargadoListener {
 	private static AppMusic unicaInstancia;
 
 	private IAdaptadorUsuarioDAO adaptadorUsuario;
@@ -32,10 +36,7 @@ public class AppMusic {
 
 	private static Usuario usuarioActual;
 
-	private Map<Cancion, Integer> masReproducidas;
-
 	private AppMusic() throws DAOException, BDException {
-		masReproducidas = new TreeMap<>();
 		try {
 			inicializarAdaptadores();
 			inicializarRepositorios();
@@ -125,8 +126,8 @@ public class AppMusic {
     
     //CANCIONES
     
-    public void altaCancion(String titulo, String interprete, String url, List<String> estilos) {
-    	Cancion cancion = new Cancion(titulo, 0, url, interprete, estilos);
+    public void altaCancion(String titulo, String interprete, String url, String estilo) {
+    	Cancion cancion = new Cancion(titulo, 0, url, interprete, estilo);
     	
     	if (repositorioCanciones.existeCancion(cancion))
     		return;
@@ -142,6 +143,35 @@ public class AppMusic {
     
     public void addCancionRecientes(Cancion cancion) {
     	if (usuarioActual != null)
-    		usuarioActual.set
+    		usuarioActual.addCancionReciente(cancion);
+    	
+    	adaptadorUsuario.modificarUsuario(usuarioActual);
     }
+    
+    public void actualizarNumRep(Cancion cancion) {
+    	cancion.setNumRep(cancion.getNumRep() + 1);
+    	adaptadorCancion.modificarCancion(cancion);
+    	repositorioCanciones.addCancion(cancion);
+    }
+   
+    
+    //Usamos CargadorCanciones para poder cargarlas desde un fichero XML
+    public void cargarCanciones(String fichero) throws URISyntaxException {
+    	CargadorCanciones c = new CargadorCanciones();
+    	c.addOyente(this);
+    	c.setArchivoCanciones(fichero);
+    }
+
+
+	@Override
+	public void enteradoCarga(CancionesEvent evento) {
+		evento.getCanciones().getCancion().stream()
+		.forEach(cancion -> {
+			this.altaCancion(cancion.getTitulo(), cancion.getInterprete(), cancion.getURL(), cancion.getEstilo());
+		});
+	}
+    
+	public List<Cancion> getTodasCanciones(){
+		return repositorioCanciones.getAllCanciones();
+	}
 }
