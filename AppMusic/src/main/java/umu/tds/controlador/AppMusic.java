@@ -123,5 +123,25 @@ public class AppMusic {
     	return repositorioUsuarios.getAll();
     }
     
+    //CANCIONES
     
+    public void altaCancion(String titulo, String interprete, String url, List<String> estilos) {
+    	Cancion cancion = new Cancion(titulo, 0, url, interprete, estilos);
+    	
+    	if (repositorioCanciones.existeCancion(cancion))
+    		return;
+    	
+    	repositorioCanciones.addCancion(cancion);
+    	adaptadorCancion.registrarCancion(cancion);
+    }
+    
+    public void eliminarCancion(Cancion cancion) {
+    	adaptadorCancion.borrarCancion(cancion);
+    	repositorioCanciones.removeCancion(cancion);
+    }
+    
+    public void addCancionRecientes(Cancion cancion) {
+    	if (usuarioActual != null)
+    		usuarioActual.set
+    }
 }
