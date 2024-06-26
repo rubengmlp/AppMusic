@@ -77,10 +77,22 @@ public class RepositorioCanciones {
 	}
 
 	public List<Cancion> getByEstilo(String estilo) {
-
+	    return canciones.values().stream()
+	                    .filter(cancion -> cancion.getEstilo().equalsIgnoreCase(estilo))
+	                    .collect(Collectors.toList());
 	}
 
-	public List<Cancion> getByInterprete(String estilo) {
-
+	public List<Cancion> getByInterprete(String interprete) {
+	    return canciones.values().stream()
+	                    .filter(cancion -> cancion.getInterprete().equalsIgnoreCase(interprete))
+	                    .collect(Collectors.toList());
 	}
+
+	public List<Cancion> getByInterpreteYEstilo(String interprete, String estilo) {
+	    return canciones.values().stream()
+	                    .filter(cancion -> cancion.getInterprete().equalsIgnoreCase(interprete))
+	                    .filter(cancion -> cancion.getEstilo().equalsIgnoreCase(estilo))
+	                    .collect(Collectors.toList());
+	}
+
 }
