@@ -145,5 +145,12 @@ public class Usuario {
 	public void addCancionReciente(Cancion cancion) {
 		this.cancionesRecientes.add(cancion);
 	}
+	
+	public void addPlayList(PlayList playList) {
+		this.playLists.add(playList);
+	}
 
+	public void removePlayList(PlayList playList) {
+		this.playLists.remove(playList);
+	}
 }

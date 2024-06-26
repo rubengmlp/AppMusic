@@ -4,8 +4,6 @@ import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 import tds.CargadorCanciones.CancionesEvent;
 import tds.CargadorCanciones.CargadorCanciones;
@@ -174,4 +172,58 @@ public class AppMusic implements ICargadoListener {
 	public List<Cancion> getTodasCanciones(){
 		return repositorioCanciones.getAllCanciones();
 	}
+	
+	public List<Cancion> getCancionesPorEstilo(String estilo){
+		return repositorioCanciones.getByEstilo(estilo);
+	}
+	
+	public List<Cancion> getCancionesPorInterprete(String interprete) {
+	    return repositorioCanciones.getByInterprete(interprete);
+	}
+
+	public List<Cancion> getCancionesPorInterpreteYEstilo(String interprete, String estilo) {
+	    return repositorioCanciones.getByInterpreteYEstilo(interprete, estilo);
+	}
+	
+	//PLAYLISTS
+	
+    public void crearPlayList(String nombre) {
+    	if (usuarioActual != null) {
+    		PlayList playList = new PlayList(nombre);
+    		usuarioActual.addPlayList(playList);
+    		//Se persiste la playList en la bd
+    		adaptadorPlayList.registrarPlayList(playList);
+    		//Se actualiza el usuario en la bd
+    		adaptadorUsuario.modificarUsuario(usuarioActual);
+    	}
+    }
+    
+    public void eliminarPlayList(PlayList playList) {
+    	//Se elimina de las playList del usuario
+    	usuarioActual.removePlayList(playList);
+    	//Se actualiza el usuario en la bd
+    	adaptadorUsuario.modificarUsuario(usuarioActual);
+    	//Eliminamos la lista de la bd
+    	adaptadorPlayList.borrarPlayList(playList);
+    }
+    
+    //Devuelve una playList de un usuario dado el nombre de esta
+    public PlayList getPlayList(String nombre) {
+    	if (usuarioActual != null) {
+    		PlayList playList = usuarioActual.getPlayLists()
+    							   .stream()
+				    			   .filter(pl -> pl.getNombre().equals(nombre))
+				    			   .findAny()
+				    			   .orElse(null);
+    		return playList;
+    	}
+    	return null;
+    }
+    
+    public void addCancionAPlayList(Cancion cancion, PlayList playList) {
+    	if (usuarioActual != null) {
+    			playList.addCancion(cancion);
+        		adaptadorPlayList.modificarPlayList(playList);
+    	}
+    }
 }

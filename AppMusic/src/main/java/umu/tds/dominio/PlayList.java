@@ -42,16 +42,4 @@ public class PlayList {
 		this.codigo = codigo;
 	}
 
-	public void agregarReciente(Cancion c) {
-		if(canciones.contains(c)) {
-			canciones.remove(c);
-			canciones.addFirst(c);
-		}else {
-			if(canciones.size() == 5) {
-				canciones.removeLast();
-			}
-			canciones.addFirst(c);
-		}
-	}
-
 }
