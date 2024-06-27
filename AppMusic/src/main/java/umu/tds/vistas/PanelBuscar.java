@@ -44,19 +44,18 @@ public class PanelBuscar extends JPanel {
 	private JTextField textFieldTitulo;
 	private JTextField textFieldInterprete;
 	private JTable table;
-	
 
 	/**
 	 * Create the panel.
 	 */
 	public PanelBuscar() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{0, 0};
-		gridBagLayout.rowHeights = new int[]{150, 150, 25, 0};
-		gridBagLayout.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{1.0, 1.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.columnWidths = new int[] { 0, 0 };
+		gridBagLayout.rowHeights = new int[] { 150, 150, 25, 0 };
+		gridBagLayout.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
+		gridBagLayout.rowWeights = new double[] { 1.0, 1.0, 1.0, Double.MIN_VALUE };
 		setLayout(gridBagLayout);
-		
+
 		JPanel panel_1 = new JPanel();
 		GridBagConstraints gbc_panel_1 = new GridBagConstraints();
 		gbc_panel_1.insets = new Insets(0, 0, 5, 0);
@@ -65,12 +64,12 @@ public class PanelBuscar extends JPanel {
 		gbc_panel_1.gridy = 0;
 		add(panel_1, gbc_panel_1);
 		GridBagLayout gbl_panel_1 = new GridBagLayout();
-		gbl_panel_1.columnWidths = new int[]{10, 50, 120, 10, 0, 10, 0};
-		gbl_panel_1.rowHeights = new int[]{10, 0, 10, 0, 10, 0, 0};
-		gbl_panel_1.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gbl_panel_1.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_panel_1.columnWidths = new int[] { 10, 50, 120, 10, 0, 10, 0 };
+		gbl_panel_1.rowHeights = new int[] { 10, 0, 10, 0, 10, 0, 0 };
+		gbl_panel_1.columnWeights = new double[] { 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, Double.MIN_VALUE };
+		gbl_panel_1.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		panel_1.setLayout(gbl_panel_1);
-		
+
 		JLabel lblTitulo = new JLabel("Título");
 		GridBagConstraints gbc_lblTitulo = new GridBagConstraints();
 		gbc_lblTitulo.insets = new Insets(0, 0, 5, 5);
@@ -78,7 +77,7 @@ public class PanelBuscar extends JPanel {
 		gbc_lblTitulo.gridx = 1;
 		gbc_lblTitulo.gridy = 1;
 		panel_1.add(lblTitulo, gbc_lblTitulo);
-		
+
 		textFieldTitulo = new JTextField();
 		GridBagConstraints gbc_textFieldTitulo = new GridBagConstraints();
 		gbc_textFieldTitulo.fill = GridBagConstraints.HORIZONTAL;
@@ -87,14 +86,14 @@ public class PanelBuscar extends JPanel {
 		gbc_textFieldTitulo.gridy = 1;
 		panel_1.add(textFieldTitulo, gbc_textFieldTitulo);
 		textFieldTitulo.setColumns(10);
-		
+
 		JCheckBox chckbxFav = new JCheckBox("Favoritas");
 		GridBagConstraints gbc_chckbxFav = new GridBagConstraints();
 		gbc_chckbxFav.insets = new Insets(0, 0, 5, 5);
 		gbc_chckbxFav.gridx = 4;
 		gbc_chckbxFav.gridy = 2;
 		panel_1.add(chckbxFav, gbc_chckbxFav);
-		
+
 		JLabel lblInterpete = new JLabel("Intérpete");
 		GridBagConstraints gbc_lblInterpete = new GridBagConstraints();
 		gbc_lblInterpete.anchor = GridBagConstraints.EAST;
@@ -102,7 +101,7 @@ public class PanelBuscar extends JPanel {
 		gbc_lblInterpete.gridx = 1;
 		gbc_lblInterpete.gridy = 3;
 		panel_1.add(lblInterpete, gbc_lblInterpete);
-		
+
 		textFieldInterprete = new JTextField();
 		textFieldInterprete.setColumns(10);
 		GridBagConstraints gbc_textFieldInterprete = new GridBagConstraints();
@@ -111,7 +110,7 @@ public class PanelBuscar extends JPanel {
 		gbc_textFieldInterprete.gridx = 2;
 		gbc_textFieldInterprete.gridy = 3;
 		panel_1.add(textFieldInterprete, gbc_textFieldInterprete);
-		
+
 		GridBagConstraints gbc_btnBuscar = new GridBagConstraints();
 		gbc_btnBuscar.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnBuscar.insets = new Insets(0, 0, 5, 5);
@@ -119,7 +118,7 @@ public class PanelBuscar extends JPanel {
 		gbc_btnBuscar.gridy = 3;
 		JButton btnBuscar = new JButton("Buscar");
 		panel_1.add(btnBuscar, gbc_btnBuscar);
-		
+
 		JPanel panel_3 = new JPanel();
 		GridBagConstraints gbc_panel_3 = new GridBagConstraints();
 		gbc_panel_3.insets = new Insets(0, 0, 5, 5);
@@ -127,10 +126,10 @@ public class PanelBuscar extends JPanel {
 		gbc_panel_3.gridx = 4;
 		gbc_panel_3.gridy = 4;
 		panel_1.add(panel_3, gbc_panel_3);
-		
+
 		JLabel lblNewLabel = new JLabel("Cargar de XML");
 		panel_3.add(lblNewLabel);
-		
+
 		Luz luz = new Luz();
 		panel_3.add(luz);
 		luz.addEncendidoListener(new IEncendidoListener() {
@@ -156,7 +155,7 @@ public class PanelBuscar extends JPanel {
 				}
 			}
 		});
-		
+
 		JLabel lblEstilo = new JLabel("Estilo");
 		GridBagConstraints gbc_lblEstilo = new GridBagConstraints();
 		gbc_lblEstilo.anchor = GridBagConstraints.EAST;
@@ -164,16 +163,17 @@ public class PanelBuscar extends JPanel {
 		gbc_lblEstilo.gridx = 1;
 		gbc_lblEstilo.gridy = 5;
 		panel_1.add(lblEstilo, gbc_lblEstilo);
-		
+
 		JComboBox comboBoxEstilo = new JComboBox();
-		comboBoxEstilo.setModel(new DefaultComboBoxModel(new String[] {"", "CLASICA", "FLAMENCO", "OPERA", "POP", "ROCK", "ROMANTICA"}));
+		comboBoxEstilo.setModel(new DefaultComboBoxModel(
+				new String[] { "", "CLASICA", "FLAMENCO", "OPERA", "POP", "ROCK", "ROMANTICA" }));
 		GridBagConstraints gbc_comboBoxEstilo = new GridBagConstraints();
 		gbc_comboBoxEstilo.insets = new Insets(0, 0, 0, 5);
 		gbc_comboBoxEstilo.fill = GridBagConstraints.HORIZONTAL;
 		gbc_comboBoxEstilo.gridx = 2;
 		gbc_comboBoxEstilo.gridy = 5;
 		panel_1.add(comboBoxEstilo, gbc_comboBoxEstilo);
-		
+
 		JPanel panel_2 = new JPanel();
 		GridBagConstraints gbc_panel_2 = new GridBagConstraints();
 		gbc_panel_2.insets = new Insets(0, 0, 5, 0);
@@ -182,31 +182,25 @@ public class PanelBuscar extends JPanel {
 		gbc_panel_2.gridy = 1;
 		add(panel_2, gbc_panel_2);
 		panel_2.setLayout(new BorderLayout(0, 0));
-		
+
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setMinimumSize(new Dimension(0, 0));
 		scrollPane.setMaximumSize(new Dimension(200, 200));
 		panel_2.add(scrollPane);
-		
+
 		table = new JTable();
 		table.setMinimumSize(new Dimension(100, 50));
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"T\u00EDtulo", "Int\u00E9rprete", "Estilo", "Seleccionada"
-			}
-		) {
-			Class[] columnTypes = new Class[] {
-				String.class, String.class, String.class, Boolean.class
-			};
+		table.setModel(new DefaultTableModel(new Object[][] {},
+				new String[] { "T\u00EDtulo", "Int\u00E9rprete", "Estilo", "Seleccionada" }) {
+			Class[] columnTypes = new Class[] { String.class, String.class, String.class, Boolean.class };
+
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
 		});
 		table.getColumnModel().getColumn(2).setPreferredWidth(77);
 		scrollPane.setViewportView(table);
-		
+
 		JPanel panel = new JPanel();
 		GridBagConstraints gbc_panel = new GridBagConstraints();
 		gbc_panel.fill = GridBagConstraints.BOTH;
@@ -214,55 +208,55 @@ public class PanelBuscar extends JPanel {
 		gbc_panel.gridy = 2;
 		add(panel, gbc_panel);
 		GridBagLayout gbl_panel = new GridBagLayout();
-		gbl_panel.columnWidths = new int[]{20, 89, 89, 89, 89, 89, 0, 20, 0};
-		gbl_panel.rowHeights = new int[]{0, 0};
-		gbl_panel.columnWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
-		gbl_panel.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+		gbl_panel.columnWidths = new int[] { 20, 89, 89, 89, 89, 89, 0, 20, 0 };
+		gbl_panel.rowHeights = new int[] { 0, 0 };
+		gbl_panel.columnWeights = new double[] { 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
+		gbl_panel.rowWeights = new double[] { 1.0, Double.MIN_VALUE };
 		panel.setLayout(gbl_panel);
-		
+
 		JButton btnAnterior = new JButton("");
 		btnAnterior.setIcon(new ImageIcon(PanelBuscar.class.getResource("/umu/tds/imagenes/atras.png")));
 		btnAnterior.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent e) {
-		        try {
-		            Cancion c = AppMusic.getUnicaInstancia().getCancionSonando();
-		            if (c != null) {
-		                int fila = table.getSelectedRow();
-		                if (fila == -1) {
-		                    return;
-		                }
-		                fila--;
-		                if (fila < 0) {
-		                    fila = canciones.size() - 1;
-		                }
-		                AppMusic.getUnicaInstancia().detenerReproduccion(c);
-		                AppMusic.getUnicaInstancia().iniciarReproduccion(canciones.get(fila));
-		                table.setRowSelectionInterval(fila, fila);
-		                AppMusic.getUnicaInstancia().addCancionARecientes(canciones.get(fila));
-		            }
-		        } catch (DAOException | BDException e1) {
-		            e1.printStackTrace();
-		        }
-		    }
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Cancion c = AppMusic.getUnicaInstancia().getCancionSonando();
+					if (c != null) {
+						int fila = table.getSelectedRow();
+						if (fila == -1) {
+							return;
+						}
+						fila--;
+						if (fila < 0) {
+							fila = canciones.size() - 1;
+						}
+						AppMusic.getUnicaInstancia().detenerReproduccion(c);
+						AppMusic.getUnicaInstancia().iniciarReproduccion(canciones.get(fila));
+						table.setRowSelectionInterval(fila, fila);
+						AppMusic.getUnicaInstancia().addCancionARecientes(canciones.get(fila));
+					}
+				} catch (DAOException | BDException e1) {
+					e1.printStackTrace();
+				}
+			}
 		});
 		GridBagConstraints gbc_btnAnterior = new GridBagConstraints();
 		gbc_btnAnterior.insets = new Insets(0, 0, 0, 5);
 		gbc_btnAnterior.gridx = 1;
 		gbc_btnAnterior.gridy = 0;
 		panel.add(btnAnterior, gbc_btnAnterior);
-		
+
 		JButton btnDetener = new JButton("");
 		btnDetener.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent e) {
-		        try {
-		            Cancion cancion = AppMusic.getUnicaInstancia().getCancionSonando();
-		            if (cancion != null) {
-		                AppMusic.getUnicaInstancia().detenerReproduccion(cancion);
-		            }
-		        } catch (DAOException | BDException e1) {
-		            e1.printStackTrace();
-		        }
-		    }
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Cancion cancion = AppMusic.getUnicaInstancia().getCancionSonando();
+					if (cancion != null) {
+						AppMusic.getUnicaInstancia().detenerReproduccion(cancion);
+					}
+				} catch (DAOException | BDException e1) {
+					e1.printStackTrace();
+				}
+			}
 		});
 
 		btnDetener.setIcon(new ImageIcon(PanelBuscar.class.getResource("/umu/tds/imagenes/detener.png")));
@@ -271,92 +265,80 @@ public class PanelBuscar extends JPanel {
 		gbc_btnDetener.gridx = 2;
 		gbc_btnDetener.gridy = 0;
 		panel.add(btnDetener, gbc_btnDetener);
-		
+
 		JButton btnPlay = new JButton("");
 		btnPlay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int selectedRow = table.getSelectedRow();
 				if (selectedRow != -1) {
 					Cancion cancion = canciones.get(selectedRow);
-					if(cancion != null) {
+					if (cancion != null) {
 						try {
 							AppMusic.getUnicaInstancia().iniciarReproduccion(cancion);
-						} catch (DAOException | BDException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
-						try {
 							AppMusic.getUnicaInstancia().addCancionARecientes(cancion);
 						} catch (DAOException | BDException e1) {
-							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
 					}
 				}
 			}
 		});
+
 		btnPlay.setIcon(new ImageIcon(PanelBuscar.class.getResource("/umu/tds/imagenes/play.png")));
 		GridBagConstraints gbc_btnPlay = new GridBagConstraints();
 		gbc_btnPlay.insets = new Insets(0, 0, 0, 5);
 		gbc_btnPlay.gridx = 3;
 		gbc_btnPlay.gridy = 0;
 		panel.add(btnPlay, gbc_btnPlay);
-		
+
 		JButton btnPausa = new JButton("");
 		btnPausa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Cancion cancion = null;
 				try {
-					cancion = AppMusic.getUnicaInstancia().getCancionSonando();
+					Cancion cancion = AppMusic.getUnicaInstancia().getCancionSonando();
+					if (cancion != null) {
+						AppMusic.getUnicaInstancia().pausarReproduccion(cancion);
+					}
 				} catch (DAOException | BDException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				if (cancion != null)
-					try {
-						AppMusic.getUnicaInstancia().pausarReproduccion(cancion);
-					} catch (DAOException | BDException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
 			}
 		});
+
 		btnPausa.setIcon(new ImageIcon(PanelBuscar.class.getResource("/umu/tds/imagenes/pausa.png")));
 		GridBagConstraints gbc_btnPausa = new GridBagConstraints();
 		gbc_btnPausa.insets = new Insets(0, 0, 0, 5);
 		gbc_btnPausa.gridx = 4;
 		gbc_btnPausa.gridy = 0;
 		panel.add(btnPausa, gbc_btnPausa);
-		
+
 		JButton btnSiguiente = new JButton("");
 		btnSiguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AppMusic app = null;
 				try {
-					app = AppMusic.getUnicaInstancia();
+					Cancion cancionSonando = AppMusic.getUnicaInstancia().getCancionSonando();
+
+					if (cancionSonando != null) {
+						int filaSeleccionada = table.getSelectedRow();
+
+						if (filaSeleccionada == -1) {
+							return;
+						}
+
+						filaSeleccionada++;
+
+						if (filaSeleccionada >= canciones.size()) {
+							filaSeleccionada = 0;
+						}
+
+						AppMusic.getUnicaInstancia().detenerReproduccion(cancionSonando);
+						AppMusic.getUnicaInstancia().iniciarReproduccion(canciones.get(filaSeleccionada));
+						table.setRowSelectionInterval(filaSeleccionada, filaSeleccionada);
+						AppMusic.getUnicaInstancia().addCancionARecientes(canciones.get(filaSeleccionada));
+					}
 				} catch (DAOException | BDException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
-				}
-				Cancion cancionSonando = app.getCancionSonando();
-
-				if (cancionSonando != null) {
-				    int filaSeleccionada = table.getSelectedRow();
-
-				    if (filaSeleccionada == -1) {
-				        return;
-				    }
-
-				    filaSeleccionada++;
-
-				    if (filaSeleccionada >= canciones.size()) {
-				        filaSeleccionada = 0;
-				    }
-
-				    app.detenerReproduccion(cancionSonando);
-				    app.iniciarReproduccion(canciones.get(filaSeleccionada));
-				    table.setRowSelectionInterval(filaSeleccionada, filaSeleccionada);
-				    app.addCancionARecientes(canciones.get(filaSeleccionada));
 				}
 			}
 		});
@@ -366,25 +348,25 @@ public class PanelBuscar extends JPanel {
 		gbc_btnSiguiente.gridx = 5;
 		gbc_btnSiguiente.gridy = 0;
 		panel.add(btnSiguiente, gbc_btnSiguiente);
-		
+
 		JButton btnAdd = new JButton("Añadir a lista");
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				List<Cancion> seleccionadas = new LinkedList<Cancion>();
-				for(int i = 0; i < table.getRowCount(); i++) {
+				for (int i = 0; i < table.getRowCount(); i++) {
 					boolean seleccionada = (boolean) table.getValueAt(i, 3);
-					if(seleccionada) {
+					if (seleccionada) {
 						seleccionadas.add(canciones.get(i));
 					}
 				}
-				
+
 				if (seleccionadas.isEmpty()) {
-		            JOptionPane.showMessageDialog(PanelBuscar.this,
-		                    "Seleccione al menos una canción para añadir a la playlist",
-		                    "Error", JOptionPane.ERROR_MESSAGE);
-		            return;
-		        }
-				
+					JOptionPane.showMessageDialog(PanelBuscar.this,
+							"Seleccione al menos una canción para añadir a la playlist", "Error",
+							JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+
 				try {
 					DialogAnadir dialog = new DialogAnadir((Frame) SwingUtilities.getWindowAncestor(PanelBuscar.this));
 					dialog.setCancionesSeleccionadas(seleccionadas);
@@ -400,56 +382,40 @@ public class PanelBuscar extends JPanel {
 		gbc_btnAdd.gridx = 6;
 		gbc_btnAdd.gridy = 0;
 		panel.add(btnAdd, gbc_btnAdd);
-		
+
 		btnBuscar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					canciones = AppMusic.getUnicaInstancia().getTodasCanciones();
-				} catch (DAOException | BDException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+		    public void actionPerformed(ActionEvent e) {
+		        try {
+		            canciones = AppMusic.getUnicaInstancia().getTodasCanciones();
 
-				if (comboBoxEstilo.getSelectedItem().toString() != "")
-					try {
-						canciones = AppMusic.getUnicaInstancia()
-								.filtroEstilo(comboBoxEstilo.getSelectedItem().toString(), canciones);
-					} catch (DAOException | BDException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				if (!(textFieldTitulo.getText().isBlank() || textFieldTitulo.getText().isEmpty()))
-					try {
-						canciones = AppMusic.getUnicaInstancia().filtroTitulo(textFieldTitulo.getText(),
-								canciones);
-					} catch (DAOException | BDException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				if (!(textFieldInterprete.getText().isBlank() || textFieldInterprete.getText().isEmpty()))
-					try {
-						canciones = AppMusic.getUnicaInstancia()
-								.filtroInterprete(textFieldInterprete.getText(), canciones);
-					} catch (DAOException | BDException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				if (chckbxFav.isSelected())
-					try {
-						canciones = AppMusic.getUnicaInstancia().filtroFavoritas(canciones);
-					} catch (DAOException | BDException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				
-				DefaultTableModel modeloTabla = (DefaultTableModel) table.getModel();
+		            if (!comboBoxEstilo.getSelectedItem().toString().isEmpty()) {
+		                canciones = AppMusic.getUnicaInstancia().filtroEstilo(comboBoxEstilo.getSelectedItem().toString(), canciones);
+		            }
 
-				modeloTabla.setRowCount(0);
+		            if (!textFieldTitulo.getText().isBlank()) {
+		                canciones = AppMusic.getUnicaInstancia().filtroTitulo(textFieldTitulo.getText(), canciones);
+		            }
 
-				for (Cancion c : canciones) {
-					modeloTabla.addRow(new Object[] { c.getTitulo(), c.getInterprete(), c.getEstilo(), false });
-				}
-			}
+		            if (!textFieldInterprete.getText().isBlank()) {
+		                canciones = AppMusic.getUnicaInstancia().filtroInterprete(textFieldInterprete.getText(), canciones);
+		            }
+
+		            if (chckbxFav.isSelected()) {
+		                canciones = AppMusic.getUnicaInstancia().filtroFavoritas(canciones);
+		            }
+
+		            DefaultTableModel modeloTabla = (DefaultTableModel) table.getModel();
+		            modeloTabla.setRowCount(0);
+
+		            for (Cancion c : canciones) {
+		                modeloTabla.addRow(new Object[] { c.getTitulo(), c.getInterprete(), c.getEstilo(), false });
+		            }
+
+		        } catch (DAOException | BDException ex) {
+		            ex.printStackTrace();
+		            
+		        }
+		    }
 		});
 
 	}
