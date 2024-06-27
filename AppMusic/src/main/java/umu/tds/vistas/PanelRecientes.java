@@ -231,6 +231,5 @@ public class PanelRecientes extends JPanel {
 		for (Cancion c : recientes) {
 			modeloTabla.addRow(new Object[] { c.getTitulo(), c.getInterprete(), c.getEstilo() });
 		}
-		System.out.println(recientes);
 	}
 }
