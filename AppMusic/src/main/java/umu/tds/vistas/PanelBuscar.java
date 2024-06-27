@@ -220,82 +220,60 @@ public class PanelBuscar extends JPanel {
 		gbl_panel.rowWeights = new double[]{1.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
 		
-		JButton btnNewButton = new JButton("");
-		btnNewButton.setIcon(new ImageIcon(PanelBuscar.class.getResource("/umu/tds/imagenes/atras.png")));
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Cancion c = null;
-				try {
-					c = AppMusic.getUnicaInstancia().getCancionSonando();
-				} catch (DAOException | BDException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				if (c != null) {
-					int fila = table.getSelectedRow();
-					if(fila == -1) {
-						return;
-					}
-					fila--;
-					if (fila < 0) {
-						fila = canciones.size() - 1;
-					}
-					try {
-						AppMusic.getUnicaInstancia().detenerReproduccion(c);
-					} catch (DAOException | BDException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					try {
-						AppMusic.getUnicaInstancia().iniciarReproduccion(canciones.get(fila));
-					} catch (DAOException | BDException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					table.setRowSelectionInterval(fila, fila);
-					try {
-						AppMusic.getUnicaInstancia().addCancionARecientes(canciones.get(fila));
-					} catch (DAOException | BDException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				}
-			}
+		JButton btnAnterior = new JButton("");
+		btnAnterior.setIcon(new ImageIcon(PanelBuscar.class.getResource("/umu/tds/imagenes/atras.png")));
+		btnAnterior.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		        try {
+		            Cancion c = AppMusic.getUnicaInstancia().getCancionSonando();
+		            if (c != null) {
+		                int fila = table.getSelectedRow();
+		                if (fila == -1) {
+		                    return;
+		                }
+		                fila--;
+		                if (fila < 0) {
+		                    fila = canciones.size() - 1;
+		                }
+		                AppMusic.getUnicaInstancia().detenerReproduccion(c);
+		                AppMusic.getUnicaInstancia().iniciarReproduccion(canciones.get(fila));
+		                table.setRowSelectionInterval(fila, fila);
+		                AppMusic.getUnicaInstancia().addCancionARecientes(canciones.get(fila));
+		            }
+		        } catch (DAOException | BDException e1) {
+		            e1.printStackTrace();
+		        }
+		    }
 		});
-		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
-		gbc_btnNewButton.insets = new Insets(0, 0, 0, 5);
-		gbc_btnNewButton.gridx = 1;
-		gbc_btnNewButton.gridy = 0;
-		panel.add(btnNewButton, gbc_btnNewButton);
+		GridBagConstraints gbc_btnAnterior = new GridBagConstraints();
+		gbc_btnAnterior.insets = new Insets(0, 0, 0, 5);
+		gbc_btnAnterior.gridx = 1;
+		gbc_btnAnterior.gridy = 0;
+		panel.add(btnAnterior, gbc_btnAnterior);
 		
-		JButton btnNewButton_1 = new JButton("");
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Cancion cancion = null;
-				try {
-					cancion = AppMusic.getUnicaInstancia().getCancionSonando();
-				} catch (DAOException | BDException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				if (cancion != null)
-					try {
-						AppMusic.getUnicaInstancia().detenerReproduccion(cancion);
-					} catch (DAOException | BDException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-			}
+		JButton btnDetener = new JButton("");
+		btnDetener.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		        try {
+		            Cancion cancion = AppMusic.getUnicaInstancia().getCancionSonando();
+		            if (cancion != null) {
+		                AppMusic.getUnicaInstancia().detenerReproduccion(cancion);
+		            }
+		        } catch (DAOException | BDException e1) {
+		            e1.printStackTrace();
+		        }
+		    }
 		});
-		btnNewButton_1.setIcon(new ImageIcon(PanelBuscar.class.getResource("/umu/tds/imagenes/detener.png")));
-		GridBagConstraints gbc_btnNewButton_1 = new GridBagConstraints();
-		gbc_btnNewButton_1.insets = new Insets(0, 0, 0, 5);
-		gbc_btnNewButton_1.gridx = 2;
-		gbc_btnNewButton_1.gridy = 0;
-		panel.add(btnNewButton_1, gbc_btnNewButton_1);
+
+		btnDetener.setIcon(new ImageIcon(PanelBuscar.class.getResource("/umu/tds/imagenes/detener.png")));
+		GridBagConstraints gbc_btnDetener = new GridBagConstraints();
+		gbc_btnDetener.insets = new Insets(0, 0, 0, 5);
+		gbc_btnDetener.gridx = 2;
+		gbc_btnDetener.gridy = 0;
+		panel.add(btnDetener, gbc_btnDetener);
 		
-		JButton btnNewButton_2 = new JButton("");
-		btnNewButton_2.addActionListener(new ActionListener() {
+		JButton btnPlay = new JButton("");
+		btnPlay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int selectedRow = table.getSelectedRow();
 				if (selectedRow != -1) {
@@ -317,15 +295,15 @@ public class PanelBuscar extends JPanel {
 				}
 			}
 		});
-		btnNewButton_2.setIcon(new ImageIcon(PanelBuscar.class.getResource("/umu/tds/imagenes/play.png")));
-		GridBagConstraints gbc_btnNewButton_2 = new GridBagConstraints();
-		gbc_btnNewButton_2.insets = new Insets(0, 0, 0, 5);
-		gbc_btnNewButton_2.gridx = 3;
-		gbc_btnNewButton_2.gridy = 0;
-		panel.add(btnNewButton_2, gbc_btnNewButton_2);
+		btnPlay.setIcon(new ImageIcon(PanelBuscar.class.getResource("/umu/tds/imagenes/play.png")));
+		GridBagConstraints gbc_btnPlay = new GridBagConstraints();
+		gbc_btnPlay.insets = new Insets(0, 0, 0, 5);
+		gbc_btnPlay.gridx = 3;
+		gbc_btnPlay.gridy = 0;
+		panel.add(btnPlay, gbc_btnPlay);
 		
-		JButton btnNewButton_3 = new JButton("");
-		btnNewButton_3.addActionListener(new ActionListener() {
+		JButton btnPausa = new JButton("");
+		btnPausa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Cancion cancion = null;
 				try {
@@ -343,15 +321,15 @@ public class PanelBuscar extends JPanel {
 					}
 			}
 		});
-		btnNewButton_3.setIcon(new ImageIcon(PanelBuscar.class.getResource("/umu/tds/imagenes/pausa.png")));
-		GridBagConstraints gbc_btnNewButton_3 = new GridBagConstraints();
-		gbc_btnNewButton_3.insets = new Insets(0, 0, 0, 5);
-		gbc_btnNewButton_3.gridx = 4;
-		gbc_btnNewButton_3.gridy = 0;
-		panel.add(btnNewButton_3, gbc_btnNewButton_3);
+		btnPausa.setIcon(new ImageIcon(PanelBuscar.class.getResource("/umu/tds/imagenes/pausa.png")));
+		GridBagConstraints gbc_btnPausa = new GridBagConstraints();
+		gbc_btnPausa.insets = new Insets(0, 0, 0, 5);
+		gbc_btnPausa.gridx = 4;
+		gbc_btnPausa.gridy = 0;
+		panel.add(btnPausa, gbc_btnPausa);
 		
-		JButton btnNewButton_4 = new JButton("");
-		btnNewButton_4.addActionListener(new ActionListener() {
+		JButton btnSiguiente = new JButton("");
+		btnSiguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AppMusic app = null;
 				try {
@@ -382,15 +360,15 @@ public class PanelBuscar extends JPanel {
 				}
 			}
 		});
-		btnNewButton_4.setIcon(new ImageIcon(PanelBuscar.class.getResource("/umu/tds/imagenes/siguiente.png")));
-		GridBagConstraints gbc_btnNewButton_4 = new GridBagConstraints();
-		gbc_btnNewButton_4.insets = new Insets(0, 0, 0, 5);
-		gbc_btnNewButton_4.gridx = 5;
-		gbc_btnNewButton_4.gridy = 0;
-		panel.add(btnNewButton_4, gbc_btnNewButton_4);
+		btnSiguiente.setIcon(new ImageIcon(PanelBuscar.class.getResource("/umu/tds/imagenes/siguiente.png")));
+		GridBagConstraints gbc_btnSiguiente = new GridBagConstraints();
+		gbc_btnSiguiente.insets = new Insets(0, 0, 0, 5);
+		gbc_btnSiguiente.gridx = 5;
+		gbc_btnSiguiente.gridy = 0;
+		panel.add(btnSiguiente, gbc_btnSiguiente);
 		
-		JButton btnNewButton_5 = new JButton("Añadir a lista");
-		btnNewButton_5.addActionListener(new ActionListener() {
+		JButton btnAdd = new JButton("Añadir a lista");
+		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				List<Cancion> seleccionadas = new LinkedList<Cancion>();
 				for(int i = 0; i < table.getRowCount(); i++) {
@@ -417,11 +395,11 @@ public class PanelBuscar extends JPanel {
 				}
 			}
 		});
-		GridBagConstraints gbc_btnNewButton_5 = new GridBagConstraints();
-		gbc_btnNewButton_5.insets = new Insets(0, 0, 0, 5);
-		gbc_btnNewButton_5.gridx = 6;
-		gbc_btnNewButton_5.gridy = 0;
-		panel.add(btnNewButton_5, gbc_btnNewButton_5);
+		GridBagConstraints gbc_btnAdd = new GridBagConstraints();
+		gbc_btnAdd.insets = new Insets(0, 0, 0, 5);
+		gbc_btnAdd.gridx = 6;
+		gbc_btnAdd.gridy = 0;
+		panel.add(btnAdd, gbc_btnAdd);
 		
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

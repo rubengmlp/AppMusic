@@ -332,6 +332,7 @@ public class AppMusic implements ICargadoListener {
 	public void iniciarReproduccion(Cancion cancion) {
 		reproductor.play("play", cancion);
 		cancion.setNumRep(cancion.getNumRep() + 1);
+		addCancionARecientes(cancion);
 		adaptadorCancion.modificarCancion(cancion);
 	}
 

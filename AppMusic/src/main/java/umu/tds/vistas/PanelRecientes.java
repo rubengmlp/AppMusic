@@ -14,7 +14,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import tds.CargadorCanciones.Canciones;
 import umu.tds.controlador.AppMusic;
 import umu.tds.dominio.Cancion;
 import umu.tds.dominio.repositorios.BDException;
@@ -32,8 +31,6 @@ public class PanelRecientes extends JPanel {
 	 * @throws DAOException 
 	 */
 	public PanelRecientes() throws DAOException, BDException {
-		recientes = AppMusic.getUnicaInstancia().getRecientes();
-		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0};
 		gridBagLayout.rowHeights = new int[]{200, 25, 0};
@@ -78,6 +75,7 @@ public class PanelRecientes extends JPanel {
 			}
 		});
 		scrollPane.setViewportView(table);
+		actualizar();
 		
 		JPanel panel = new JPanel();
 		GridBagConstraints gbc_panel = new GridBagConstraints();
@@ -85,14 +83,6 @@ public class PanelRecientes extends JPanel {
 		gbc_panel.gridx = 0;
 		gbc_panel.gridy = 1;
 		add(panel, gbc_panel);
-		
-		DefaultTableModel modeloTabla = (DefaultTableModel) table.getModel();
-
-		modeloTabla.setRowCount(0);
-
-		for (Cancion c : recientes) {
-			modeloTabla.addRow(new Object[] { c.getTitulo(), c.getInterprete(), c.getEstilo() });
-		}
 		
 		GridBagLayout gbl_panel = new GridBagLayout();
 		gbl_panel.columnWidths = new int[]{20, 89, 89, 89, 89, 89, 0, 20, 0};
@@ -146,5 +136,16 @@ public class PanelRecientes extends JPanel {
 		panel.add(btnNewButton_4, gbc_btnNewButton_4);
 
 	}
+	
+	public void actualizar() throws DAOException, BDException {
+		recientes = AppMusic.getUnicaInstancia().getRecientes();
+		DefaultTableModel modeloTabla = (DefaultTableModel) table.getModel();
 
+		modeloTabla.setRowCount(0);
+
+		for (Cancion c : recientes) {
+			modeloTabla.addRow(new Object[] { c.getTitulo(), c.getInterprete(), c.getEstilo() });
+		}
+		System.out.println(recientes);
+	}
 }

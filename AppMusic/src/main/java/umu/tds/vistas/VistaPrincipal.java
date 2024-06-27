@@ -160,6 +160,12 @@ public class VistaPrincipal extends JFrame {
 		JButton botonRecientes = new JButton("Recientes");
 		botonRecientes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try {
+					panelRecientes.actualizar();
+				} catch (DAOException | BDException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				CardLayout cl = (CardLayout) (panel_2.getLayout());
 				cl.show(panel_2, "Recientes");
 			}

@@ -33,7 +33,9 @@ public class PanelMisPlayLists extends JPanel {
 	 * @throws BDException 
 	 * @throws DAOException 
 	 */
-	public PanelMisPlayLists() throws DAOException, BDException {		
+	public PanelMisPlayLists() throws DAOException, BDException {	
+		playLists = AppMusic.getUnicaInstancia().getPlayListsUsuario();
+		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0};
 		gridBagLayout.rowHeights = new int[]{394, 25, 0};
