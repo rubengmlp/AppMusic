@@ -46,4 +46,12 @@ public class PlayList {
 		this.codigo = codigo;
 	}
 
+	public boolean contieneCancion(Cancion cancion) {
+	    for (Cancion c : canciones) {
+	        if (c.equals(cancion)) {
+	            return true;
+	        }
+	    }
+	    return false;
+	}
 }
