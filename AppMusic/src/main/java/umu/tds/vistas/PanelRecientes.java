@@ -1,30 +1,39 @@
 package umu.tds.vistas;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JTable;
+import java.util.List;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import java.awt.BorderLayout;
-import javax.swing.JList;
-import javax.swing.border.TitledBorder;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import tds.CargadorCanciones.Canciones;
+import umu.tds.controlador.AppMusic;
+import umu.tds.dominio.Cancion;
+import umu.tds.dominio.repositorios.BDException;
+import umu.tds.persistencia.DAOException;
 
 public class PanelRecientes extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private JTable table;
+	private List<Cancion> recientes;
 
 	/**
 	 * Create the panel.
+	 * @throws BDException 
+	 * @throws DAOException 
 	 */
-	public PanelRecientes() {
+	public PanelRecientes() throws DAOException, BDException {
+		recientes = AppMusic.getUnicaInstancia().getRecientes();
+		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0};
 		gridBagLayout.rowHeights = new int[]{200, 25, 0};
@@ -60,7 +69,14 @@ public class PanelRecientes extends JPanel {
 			new String[] {
 				"T\u00EDtulo", "Int\u00E9rprete", "Estilo"
 			}
-		));
+		) {
+			Class[] columnTypes = new Class[] {
+				String.class, String.class, String.class
+			};
+			public Class getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
+			}
+		});
 		scrollPane.setViewportView(table);
 		
 		JPanel panel = new JPanel();
@@ -69,6 +85,14 @@ public class PanelRecientes extends JPanel {
 		gbc_panel.gridx = 0;
 		gbc_panel.gridy = 1;
 		add(panel, gbc_panel);
+		
+		DefaultTableModel modeloTabla = (DefaultTableModel) table.getModel();
+
+		modeloTabla.setRowCount(0);
+
+		for (Cancion c : recientes) {
+			modeloTabla.addRow(new Object[] { c.getTitulo(), c.getInterprete(), c.getEstilo() });
+		}
 		
 		GridBagLayout gbl_panel = new GridBagLayout();
 		gbl_panel.columnWidths = new int[]{20, 89, 89, 89, 89, 89, 0, 20, 0};

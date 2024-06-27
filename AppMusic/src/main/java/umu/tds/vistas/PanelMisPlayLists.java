@@ -1,30 +1,39 @@
 package umu.tds.vistas;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JTable;
-import javax.swing.JScrollPane;
-import java.awt.BorderLayout;
+import java.util.List;
+
+import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
+
+import umu.tds.controlador.AppMusic;
+import umu.tds.dominio.PlayList;
+import umu.tds.dominio.repositorios.BDException;
+import umu.tds.persistencia.DAOException;
 
 public class PanelMisPlayLists extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private JTable table;
+	private List<PlayList> playLists;
 
 	/**
 	 * Create the panel.
+	 * @throws BDException 
+	 * @throws DAOException 
 	 */
-	public PanelMisPlayLists() {
+	public PanelMisPlayLists() throws DAOException, BDException {		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0};
 		gridBagLayout.rowHeights = new int[]{394, 25, 0};
@@ -72,8 +81,12 @@ public class PanelMisPlayLists extends JPanel {
 		gbc_scrollPane_1.gridy = 0;
 		panel_1.add(scrollPane_1, gbc_scrollPane_1);
 		
-		JList list = new JList();
-		scrollPane_1.setViewportView(list);
+		DefaultListModel<String> listModel = new DefaultListModel<>();
+	    for (PlayList playList : playLists) {
+	        listModel.addElement(playList.getNombre());
+	    }
+	    JList<String> list = new JList<>(listModel);
+	    scrollPane_1.setViewportView(list);
 		
 		JPanel panel = new JPanel();
 		GridBagConstraints gbc_panel = new GridBagConstraints();

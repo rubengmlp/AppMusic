@@ -56,14 +56,14 @@ public enum CargadorCancionesDisco {
 			List<Path> dirs = Files.list(path).collect(toList());
 		    for(Path dir:dirs) {
 		    	String estilo = dir.toFile().getName();
+		    	System.out.println(estilo);
 		    	for (Path file:Files.list(dir).collect(toList())){
 		    		String nombreFichero = file.toFile().getName();
 		    		String rutaFichero = estilo + "/"+ nombreFichero;
 		    		String[] partesNombre = nombreFichero.split("-");
 		    		String interprete = partesNombre[0];
-		    		String titulo = partesNombre[1];
-		    		//CatalogoInterpretes.getUnicaInstancia().addAutor(interprete);
-		    		Cancion cancion = new Cancion(titulo, interprete, rutaFichero, estilo);
+		    		String titulo = partesNombre[1].replace(".mp3", "");
+		    		Cancion cancion = new Cancion(titulo, rutaFichero, interprete, estilo);
 		    		RepositorioCanciones.getUnicaInstancia().addCancion(cancion);
 		    	}
 		    }

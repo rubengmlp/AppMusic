@@ -57,8 +57,9 @@ public class VistaPrincipal extends JFrame {
 
 	/**
 	 * Create the frame.
-	 * @throws BDException 
-	 * @throws DAOException 
+	 * 
+	 * @throws BDException
+	 * @throws DAOException
 	 */
 	public VistaPrincipal() throws DAOException, BDException {
 		setIconImage(
@@ -71,17 +72,17 @@ public class VistaPrincipal extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
-		
+
 		JPanel panel_2 = new JPanel();
 		contentPane.add(panel_2, BorderLayout.CENTER);
 		panel_2.setLayout(new CardLayout(0, 0));
-		
+
 		panelBuscar = new PanelBuscar();
 		panelGestion = new PanelGestion();
 		panelMasReproducidas = new PanelMasReproducidas();
 		panelRecientes = new PanelRecientes();
 		panelMisPlayLists = new PanelMisPlayLists();
-		
+
 		panel_2.add(panelBuscar, "Buscar");
 		panel_2.add(panelGestion, "Gestionar");
 		panel_2.add(panelMasReproducidas, "MasReproducidas");
@@ -116,8 +117,8 @@ public class VistaPrincipal extends JFrame {
 		JButton botonBuscar = new JButton("Buscar");
 		botonBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CardLayout cl = (CardLayout)(panel_2.getLayout());
-		        cl.show(panel_2, "Buscar");
+				CardLayout cl = (CardLayout) (panel_2.getLayout());
+				cl.show(panel_2, "Buscar");
 			}
 		});
 		panel_3.add(botonBuscar);
@@ -138,8 +139,8 @@ public class VistaPrincipal extends JFrame {
 		JButton botonGestionar = new JButton("Gestionar playlists");
 		botonGestionar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CardLayout cl = (CardLayout)(panel_2.getLayout());
-		        cl.show(panel_2, "Gestionar");
+				CardLayout cl = (CardLayout) (panel_2.getLayout());
+				cl.show(panel_2, "Gestionar");
 			}
 		});
 		panel_4.add(botonGestionar);
@@ -159,18 +160,40 @@ public class VistaPrincipal extends JFrame {
 		JButton botonRecientes = new JButton("Recientes");
 		botonRecientes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CardLayout cl = (CardLayout)(panel_2.getLayout());
-		        cl.show(panel_2, "Recientes");
+				CardLayout cl = (CardLayout) (panel_2.getLayout());
+				cl.show(panel_2, "Recientes");
 			}
 		});
 		panel_5.add(botonRecientes);
+		
+		JPanel panel_6 = new JPanel();
+		GridBagConstraints gbc_panel_6 = new GridBagConstraints();
+		gbc_panel_6.insets = new Insets(0, 0, 5, 0);
+		gbc_panel_6.fill = GridBagConstraints.BOTH;
+		gbc_panel_6.gridx = 0;
+		gbc_panel_6.gridy = 7;
+		panel.add(panel_6, gbc_panel_6);
+
+		JLabel lblNewLabel_4 = new JLabel("");
+		lblNewLabel_4
+				.setIcon(new ImageIcon(VistaPrincipal.class.getResource("/umu/tds/imagenes/icons8-playlist-24.png")));
+		panel_6.add(lblNewLabel_4);
+
+		JButton botonPlayLists = new JButton("Mis playlists");
+		botonPlayLists.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CardLayout cl = (CardLayout) (panel_2.getLayout());
+				cl.show(panel_2, "MisPlayLists");
+			}
+		});
+		panel_6.add(botonPlayLists);
 
 		JPanel panel_masRepro = new JPanel();
 		GridBagConstraints gbc_panel_masRepro = new GridBagConstraints();
 		gbc_panel_masRepro.insets = new Insets(0, 0, 5, 0);
 		gbc_panel_masRepro.fill = GridBagConstraints.BOTH;
 		gbc_panel_masRepro.gridx = 0;
-		gbc_panel_masRepro.gridy = 7;
+		gbc_panel_masRepro.gridy = 9;
 		panel.add(panel_masRepro, gbc_panel_masRepro);
 
 		JLabel lblNewLabel_3_2 = new JLabel("");
@@ -180,18 +203,18 @@ public class VistaPrincipal extends JFrame {
 		JButton btnMasReproducidas = new JButton("Más reproducidas");
 		btnMasReproducidas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CardLayout cl = (CardLayout)(panel_2.getLayout());
-		        cl.show(panel_2, "MasReproducidas");
+				CardLayout cl = (CardLayout) (panel_2.getLayout());
+				cl.show(panel_2, "MasReproducidas");
 			}
 		});
 		panel_masRepro.add(btnMasReproducidas);
-
+		
 		JPanel panel_pdf = new JPanel();
 		GridBagConstraints gbc_panel_pdf = new GridBagConstraints();
 		gbc_panel_pdf.insets = new Insets(0, 0, 5, 0);
 		gbc_panel_pdf.fill = GridBagConstraints.BOTH;
 		gbc_panel_pdf.gridx = 0;
-		gbc_panel_pdf.gridy = 9;
+		gbc_panel_pdf.gridy = 11;
 		panel.add(panel_pdf, gbc_panel_pdf);
 
 		JLabel lblNewLabel_3_1 = new JLabel("");
@@ -228,27 +251,6 @@ public class VistaPrincipal extends JFrame {
 			panel_pdf.setVisible(false);
 		}
 
-		JPanel panel_6 = new JPanel();
-		GridBagConstraints gbc_panel_6 = new GridBagConstraints();
-		gbc_panel_6.insets = new Insets(0, 0, 5, 0);
-		gbc_panel_6.fill = GridBagConstraints.BOTH;
-		gbc_panel_6.gridx = 0;
-		gbc_panel_6.gridy = 11;
-		panel.add(panel_6, gbc_panel_6);
-
-		JLabel lblNewLabel_4 = new JLabel("");
-		lblNewLabel_4
-				.setIcon(new ImageIcon(VistaPrincipal.class.getResource("/umu/tds/imagenes/icons8-playlist-24.png")));
-		panel_6.add(lblNewLabel_4);
-
-		JButton botonPlayLists = new JButton("Mis playlists");
-		botonPlayLists.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				CardLayout cl = (CardLayout)(panel_2.getLayout());
-		        cl.show(panel_2, "MisPlayLists");
-			}
-		});
-		panel_6.add(botonPlayLists);
 
 		JPanel panel_1 = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) panel_1.getLayout();
@@ -274,7 +276,7 @@ public class VistaPrincipal extends JFrame {
 				if (opcion == JOptionPane.OK_OPTION) {
 					try {
 						AppMusic.getUnicaInstancia().setUsuarioPremium();
-						
+
 					} catch (DAOException | BDException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -283,10 +285,10 @@ public class VistaPrincipal extends JFrame {
 					panel_masRepro.setVisible(true);
 					panel_pdf.setVisible(true);
 				}
-		}});
-		
-		btnPremium
-				.setIcon(new ImageIcon(VistaPrincipal.class.getResource("/umu/tds/imagenes/icons8-premium-24.png")));
+			}
+		});
+
+		btnPremium.setIcon(new ImageIcon(VistaPrincipal.class.getResource("/umu/tds/imagenes/icons8-premium-24.png")));
 		panel_1.add(btnPremium);
 		if (AppMusic.getUnicaInstancia().isUsuarioPremium()) {
 			btnPremium.setVisible(false);
@@ -306,7 +308,7 @@ public class VistaPrincipal extends JFrame {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				if(sonando == null) {
+				if (sonando == null) {
 					dispose();
 				} else {
 					try {
@@ -319,12 +321,9 @@ public class VistaPrincipal extends JFrame {
 				}
 			}
 		});
-		btnLogout
-				.setIcon(new ImageIcon(VistaPrincipal.class.getResource("/umu/tds/imagenes/icons8-logout-24.png")));
+		btnLogout.setIcon(new ImageIcon(VistaPrincipal.class.getResource("/umu/tds/imagenes/icons8-logout-24.png")));
 		panel_1.add(btnLogout);
 
-		
-		
 	}
 
 }

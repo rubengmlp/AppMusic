@@ -1,5 +1,6 @@
 package umu.tds.vistas;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
@@ -9,10 +10,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.EventObject;
+import java.util.LinkedList;
 import java.util.List;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -32,7 +34,6 @@ import pulsador.IEncendidoListener;
 import pulsador.Luz;
 import umu.tds.controlador.AppMusic;
 import umu.tds.dominio.Cancion;
-import umu.tds.dominio.PlayList;
 import umu.tds.dominio.repositorios.BDException;
 import umu.tds.persistencia.DAOException;
 
@@ -165,6 +166,7 @@ public class PanelBuscar extends JPanel {
 		panel_1.add(lblEstilo, gbc_lblEstilo);
 		
 		JComboBox comboBoxEstilo = new JComboBox();
+		comboBoxEstilo.setModel(new DefaultComboBoxModel(new String[] {"", "CLASICA", "FLAMENCO", "OPERA", "POP", "ROCK", "ROMANTICA"}));
 		GridBagConstraints gbc_comboBoxEstilo = new GridBagConstraints();
 		gbc_comboBoxEstilo.insets = new Insets(0, 0, 0, 5);
 		gbc_comboBoxEstilo.fill = GridBagConstraints.HORIZONTAL;
@@ -179,6 +181,7 @@ public class PanelBuscar extends JPanel {
 		gbc_panel_2.gridx = 0;
 		gbc_panel_2.gridy = 1;
 		add(panel_2, gbc_panel_2);
+		panel_2.setLayout(new BorderLayout(0, 0));
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setMinimumSize(new Dimension(0, 0));
@@ -195,12 +198,13 @@ public class PanelBuscar extends JPanel {
 			}
 		) {
 			Class[] columnTypes = new Class[] {
-				Boolean.class, String.class, String.class, Boolean.class
+				String.class, String.class, String.class, Boolean.class
 			};
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
 		});
+		table.getColumnModel().getColumn(2).setPreferredWidth(77);
 		scrollPane.setViewportView(table);
 		
 		JPanel panel = new JPanel();
@@ -388,7 +392,7 @@ public class PanelBuscar extends JPanel {
 		JButton btnNewButton_5 = new JButton("Añadir a lista");
 		btnNewButton_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				List<Cancion> seleccionadas = new ArrayList<Cancion>();
+				List<Cancion> seleccionadas = new LinkedList<Cancion>();
 				for(int i = 0; i < table.getRowCount(); i++) {
 					boolean seleccionada = (boolean) table.getValueAt(i, 3);
 					if(seleccionada) {
@@ -405,6 +409,7 @@ public class PanelBuscar extends JPanel {
 				
 				try {
 					DialogAnadir dialog = new DialogAnadir((Frame) SwingUtilities.getWindowAncestor(PanelBuscar.this));
+					dialog.setCancionesSeleccionadas(seleccionadas);
 					dialog.setVisible(true);
 				} catch (DAOException | BDException e1) {
 					// TODO Auto-generated catch block
@@ -427,7 +432,7 @@ public class PanelBuscar extends JPanel {
 					e1.printStackTrace();
 				}
 
-				if (comboBoxEstilo.getSelectedItem().toString() != "...")
+				if (comboBoxEstilo.getSelectedItem().toString() != "")
 					try {
 						canciones = AppMusic.getUnicaInstancia()
 								.filtroEstilo(comboBoxEstilo.getSelectedItem().toString(), canciones);
@@ -458,7 +463,7 @@ public class PanelBuscar extends JPanel {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-
+				
 				DefaultTableModel modeloTabla = (DefaultTableModel) table.getModel();
 
 				modeloTabla.setRowCount(0);

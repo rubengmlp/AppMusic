@@ -96,8 +96,8 @@ public class DialogAnadir extends JDialog {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-					dispose();
 				}
+				dispose();
 			}
 		});
 		GridBagConstraints gbcBtnAñadir = new GridBagConstraints();

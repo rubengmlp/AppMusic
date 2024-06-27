@@ -5,8 +5,8 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -52,6 +52,8 @@ public class AppMusic implements ICargadoListener {
 		try {
 			inicializarAdaptadores();
 			inicializarRepositorios();
+			if(repositorioCanciones.getAllCanciones().isEmpty())
+				CargadorCancionesDisco.INSTANCE.cargarCanciones();
 			reproductor = new Player();
 		} catch (DAOException e) {
 			throw e;
@@ -152,7 +154,7 @@ public class AppMusic implements ICargadoListener {
 	}
 
 	public List<PlayList> getPlayListsUsuario() {
-		List<PlayList> playLists = new ArrayList<PlayList>();
+		List<PlayList> playLists = new LinkedList<PlayList>();
 		if (usuarioActual != null)
 			playLists = usuarioActual.getPlayLists();
 		return playLists;
@@ -213,6 +215,10 @@ public class AppMusic implements ICargadoListener {
 
 		adaptadorUsuario.modificarUsuario(usuarioActual);
 	}
+	
+	public List<Cancion> getRecientes() {
+		return usuarioActual.getCancionesRecientes();
+	}
 
 	public void actualizarNumRep(Cancion cancion) {
 		cancion.setNumRep(cancion.getNumRep() + 1);
@@ -230,10 +236,6 @@ public class AppMusic implements ICargadoListener {
 		CargadorCanciones c = new CargadorCanciones();
 		c.addOyente(this);
 		c.setArchivoCanciones(fichero);
-	}
-
-	public void cargarCancionesEnDisco() throws Exception {
-		CargadorCancionesDisco.INSTANCE.cargarCanciones();
 	}
 
 	@Override

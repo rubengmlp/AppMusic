@@ -17,6 +17,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import java.awt.Component;
+import java.awt.BorderLayout;
 
 public class PanelGestion extends JPanel {
 
@@ -88,6 +89,7 @@ public class PanelGestion extends JPanel {
 		gbc_panel_2.gridx = 0;
 		gbc_panel_2.gridy = 1;
 		add(panel_2, gbc_panel_2);
+		panel_2.setLayout(new BorderLayout(0, 0));
 		
 		JScrollPane scrollPane = new JScrollPane();
 		panel_2.add(scrollPane);

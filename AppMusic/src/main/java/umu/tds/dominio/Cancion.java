@@ -16,18 +16,12 @@ public class Cancion {
 		this.interprete = interprete;
 		this.estilo = estilo;
 	}
-
-	public Cancion (String titulo, int numRepro, String url, String interprete) {
-		this.titulo = titulo;
-		this.numRep =  numRepro;
-		this.url = url;
-		this.interprete = interprete;
-	}
 	
 	public Cancion (String titulo, String url, String interprete, String estilo) {
 		this.titulo = titulo;
 		this.url = url;
 		this.interprete = interprete;
+		this.estilo = estilo;
 	}
 
 	public void addReproduccion() {
