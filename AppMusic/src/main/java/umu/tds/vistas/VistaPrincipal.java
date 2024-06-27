@@ -184,33 +184,6 @@ public class VistaPrincipal extends JFrame {
 		JButton botonPlayLists = new JButton("Mis playlists");
 		panel_6.add(botonPlayLists);
 
-		JPanel panel_7 = new JPanel();
-		GridBagConstraints gbc_panel_7 = new GridBagConstraints();
-		gbc_panel_7.fill = GridBagConstraints.BOTH;
-		gbc_panel_7.gridx = 0;
-		gbc_panel_7.gridy = 12;
-		panel.add(panel_7, gbc_panel_7);
-		panel_7.setLayout(new GridLayout(1, 0, 0, 0));
-
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBorder(new TitledBorder(null, "PlayLists", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_7.add(scrollPane);
-
-		JList list = new JList();
-		list.setModel(new AbstractListModel() {
-			String[] values = new String[] { "Lista", "Lista", "Lista", "Lista", "Lista", "Lista", "Lista", "Lista",
-					"Lista", "Lista" };
-
-			public int getSize() {
-				return values.length;
-			}
-
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});
-		scrollPane.setViewportView(list);
-
 		JPanel panel_1 = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) panel_1.getLayout();
 		flowLayout.setAlignment(FlowLayout.RIGHT);
