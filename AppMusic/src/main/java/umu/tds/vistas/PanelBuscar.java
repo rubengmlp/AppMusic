@@ -10,6 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.EventObject;
 import java.util.LinkedList;
 import java.util.List;
@@ -47,7 +49,6 @@ public class PanelBuscar extends JPanel {
 	private JTextField textFieldInterprete;
 	private JTable table;
 	private List<Cancion> seleccionadas = new LinkedList<Cancion>();
-	private List<Cancion> currentlySelected = new LinkedList<Cancion>();
 
 	/**
 	 * Create the panel.
@@ -421,38 +422,31 @@ public class PanelBuscar extends JPanel {
 		    }
 		});
 		
-
 		table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 		    @Override
 		    public void valueChanged(ListSelectionEvent e) {
 		        if (!e.getValueIsAdjusting()) {
 		            // Obtener las filas actualmente seleccionadas
 		            int[] selectedRows = table.getSelectedRows();
-		            Set<Cancion> newCurrentlySelected = new HashSet<>();
-
+		
+		            
+		            // Añadir las canciones seleccionadas a la lista auxiliar
 		            for (int row : selectedRows) {
-		                newCurrentlySelected.add(canciones.get(row));
+		                seleccionadas.add(canciones.get(row));
 		            }
 
-		            // Añadir nuevas selecciones
-		            for (Cancion cancion : newCurrentlySelected) {
-		                if (!currentlySelected.contains(cancion)) {
-		                    currentlySelected.add(cancion);
-		                }
-		            }
-
-		            // Eliminar deselecciones
-		            currentlySelected.removeIf(cancion -> !newCurrentlySelected.contains(cancion));
-
-		            // Actualizar la lista en AppMusic
+		            // Actualizar la lista en AppMusic con la lista auxiliar
 		            try {
-		                AppMusic.getUnicaInstancia().setListaCancionesSeleccionadas(new ArrayList<>(currentlySelected));
+		                AppMusic.getUnicaInstancia().setListaCancionesSeleccionadas(seleccionadas);
 		            } catch (DAOException | BDException e1) {
 		                e1.printStackTrace();
 		            }
 		        }
 		    }
 		});
+
+		
+
 
 
 
