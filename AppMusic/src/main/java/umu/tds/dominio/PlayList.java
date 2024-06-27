@@ -21,6 +21,10 @@ public class PlayList {
 	public void addCancion(Cancion c) {
 		this.canciones.add(c);
 	}
+	
+	public void addCanciones(List<Cancion> canciones) {
+		this.canciones.addAll(canciones);
+	}
 
 	public void deleteCancion(Cancion c) {
 		this.canciones.remove(c);

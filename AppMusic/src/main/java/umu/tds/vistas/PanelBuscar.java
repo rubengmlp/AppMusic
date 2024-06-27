@@ -1,6 +1,7 @@
 package umu.tds.vistas;
 
 import java.awt.Dimension;
+import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -8,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.EventObject;
 import java.util.List;
 
@@ -17,10 +19,12 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
@@ -28,6 +32,7 @@ import pulsador.IEncendidoListener;
 import pulsador.Luz;
 import umu.tds.controlador.AppMusic;
 import umu.tds.dominio.Cancion;
+import umu.tds.dominio.PlayList;
 import umu.tds.dominio.repositorios.BDException;
 import umu.tds.persistencia.DAOException;
 
@@ -186,9 +191,16 @@ public class PanelBuscar extends JPanel {
 			new Object[][] {
 			},
 			new String[] {
-				"T\u00EDtulo", "Int\u00E9rprete", "Estilo"
+				"T\u00EDtulo", "Int\u00E9rprete", "Estilo", "Seleccionada"
 			}
-		));
+		) {
+			Class[] columnTypes = new Class[] {
+				Boolean.class, String.class, String.class, Boolean.class
+			};
+			public Class getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
+			}
+		});
 		scrollPane.setViewportView(table);
 		
 		JPanel panel = new JPanel();
@@ -364,7 +376,6 @@ public class PanelBuscar extends JPanel {
 				    table.setRowSelectionInterval(filaSeleccionada, filaSeleccionada);
 				    app.addCancionARecientes(canciones.get(filaSeleccionada));
 				}
-
 			}
 		});
 		btnNewButton_4.setIcon(new ImageIcon(PanelBuscar.class.getResource("/umu/tds/imagenes/siguiente.png")));
@@ -375,6 +386,32 @@ public class PanelBuscar extends JPanel {
 		panel.add(btnNewButton_4, gbc_btnNewButton_4);
 		
 		JButton btnNewButton_5 = new JButton("Añadir a lista");
+		btnNewButton_5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				List<Cancion> seleccionadas = new ArrayList<Cancion>();
+				for(int i = 0; i < table.getRowCount(); i++) {
+					boolean seleccionada = (boolean) table.getValueAt(i, 3);
+					if(seleccionada) {
+						seleccionadas.add(canciones.get(i));
+					}
+				}
+				
+				if (seleccionadas.isEmpty()) {
+		            JOptionPane.showMessageDialog(PanelBuscar.this,
+		                    "Seleccione al menos una canción para añadir a la playlist",
+		                    "Error", JOptionPane.ERROR_MESSAGE);
+		            return;
+		        }
+				
+				try {
+					DialogAnadir dialog = new DialogAnadir((Frame) SwingUtilities.getWindowAncestor(PanelBuscar.this));
+					dialog.setVisible(true);
+				} catch (DAOException | BDException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
 		GridBagConstraints gbc_btnNewButton_5 = new GridBagConstraints();
 		gbc_btnNewButton_5.insets = new Insets(0, 0, 0, 5);
 		gbc_btnNewButton_5.gridx = 6;

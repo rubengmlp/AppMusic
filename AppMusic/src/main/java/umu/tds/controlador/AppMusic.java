@@ -281,6 +281,17 @@ public class AppMusic implements ICargadoListener {
 			adaptadorUsuario.modificarUsuario(usuarioActual);
 		}
 	}
+	
+	public void crearPlayList(String nombre, List<Cancion> canciones) {
+		if (usuarioActual != null) {
+			PlayList playList = new PlayList(nombre, canciones);
+			usuarioActual.addPlayList(playList);
+			// Se persiste la playList en la bd
+			adaptadorPlayList.registrarPlayList(playList);
+			// Se actualiza el usuario en la bd
+			adaptadorUsuario.modificarUsuario(usuarioActual);
+		}
+	}
 
 	public void eliminarPlayList(PlayList playList) {
 		// Se elimina de las playList del usuario
@@ -304,6 +315,13 @@ public class AppMusic implements ICargadoListener {
 	public void addCancionAPlayList(Cancion cancion, PlayList playList) {
 		if (usuarioActual != null) {
 			playList.addCancion(cancion);
+			adaptadorPlayList.modificarPlayList(playList);
+		}
+	}
+	
+	public void addCancionesAPlayList(List<Cancion> canciones, PlayList playList) {
+		if (usuarioActual != null) {
+			playList.addCanciones(canciones);
 			adaptadorPlayList.modificarPlayList(playList);
 		}
 	}
