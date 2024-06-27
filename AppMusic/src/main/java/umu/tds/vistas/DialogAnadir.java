@@ -21,6 +21,7 @@ import umu.tds.dominio.Cancion;
 import umu.tds.dominio.PlayList;
 import umu.tds.dominio.repositorios.BDException;
 import umu.tds.persistencia.DAOException;
+import javax.swing.DefaultComboBoxModel;
 
 public class DialogAnadir extends JDialog {
 
@@ -47,6 +48,7 @@ public class DialogAnadir extends JDialog {
 		panel.add(lblPlaylists, gbc);
 
 		comboBoxPlaylists = new JComboBox<>();
+		comboBoxPlaylists.setModel(new DefaultComboBoxModel(new String[] {" "}));
 		List<PlayList> playLists = AppMusic.getUnicaInstancia().getPlayListsUsuario();
 		for (PlayList playlist : playLists) {
 			comboBoxPlaylists.addItem(playlist.getNombre());
@@ -72,34 +74,40 @@ public class DialogAnadir extends JDialog {
 
 		JButton btnAñadir = new JButton("Añadir");
 		btnAñadir.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String nombrePlaylist = (String) comboBoxPlaylists.getSelectedItem();
-				if (nombrePlaylist == null || nombrePlaylist.isEmpty()) {
-					nombrePlaylist = textFieldNuevaPlaylist.getText();
-					if (nombrePlaylist.isEmpty()) {
-						JOptionPane.showMessageDialog(DialogAnadir.this, "Ingrese un nombre para la nueva PlayList",
-								"Error", JOptionPane.ERROR_MESSAGE);
-						return;
-					}
-					try {
-						AppMusic.getUnicaInstancia().crearPlayList(nombrePlaylist, cancionesSeleccionadas);
-					} catch (DAOException | BDException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				} else {
-					PlayList playList = null;
-					try {
-						playList = AppMusic.getUnicaInstancia().getPlayList(nombrePlaylist);
-						AppMusic.getUnicaInstancia().addCancionesAPlayList(cancionesSeleccionadas, playList);
-					} catch (DAOException | BDException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				}
-				dispose();
-			}
+		    public void actionPerformed(ActionEvent e) {
+		        String nombrePlaylist = (String) comboBoxPlaylists.getSelectedItem();
+		        try {
+		            if (nombrePlaylist == null || nombrePlaylist.isEmpty() || nombrePlaylist.equals(" ")) {
+		                nombrePlaylist = textFieldNuevaPlaylist.getText();
+		                if (nombrePlaylist.isEmpty()) {
+		                    JOptionPane.showMessageDialog(DialogAnadir.this, "Ingrese un nombre para la nueva PlayList",
+		                            "Error", JOptionPane.ERROR_MESSAGE);
+		                    return;
+		                }
+		                AppMusic.getUnicaInstancia().crearPlayList(nombrePlaylist, cancionesSeleccionadas);
+		            } else {
+		            	if (!textFieldNuevaPlaylist.getText().isBlank()) {
+		            		JOptionPane.showMessageDialog(DialogAnadir.this, "Rellene solo uno de los dos campos",
+		                            "Error", JOptionPane.ERROR_MESSAGE);
+		                    return;
+		            	}
+		                PlayList playList = AppMusic.getUnicaInstancia().getPlayList(nombrePlaylist);
+		                if (playList != null) {
+		                    AppMusic.getUnicaInstancia().addCancionesAPlayList(cancionesSeleccionadas, playList);
+		                } else {
+		                    JOptionPane.showMessageDialog(DialogAnadir.this, "No se encontró la PlayList seleccionada",
+		                            "Error", JOptionPane.ERROR_MESSAGE);
+		                }
+		            }
+		        } catch (DAOException | BDException ex) {
+		            ex.printStackTrace();
+		            JOptionPane.showMessageDialog(DialogAnadir.this, "Error: " + ex.getMessage(),
+		                    "Error", JOptionPane.ERROR_MESSAGE);
+		        }
+		        dispose();
+		    }
 		});
+
 		GridBagConstraints gbcBtnAñadir = new GridBagConstraints();
 		gbcBtnAñadir.gridx = 0;
 		gbcBtnAñadir.gridy = 2;

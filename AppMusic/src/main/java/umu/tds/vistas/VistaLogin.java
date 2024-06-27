@@ -178,6 +178,7 @@ public class VistaLogin {
 					}
 					principal.setLocationRelativeTo(null);
 					principal.setVisible(true);
+					frame.dispose();
 				} else {
 					JOptionPane.showMessageDialog(null, "Nombre de usuario o contraseña incorrectos", "Login AppMusic",
 							JOptionPane.ERROR_MESSAGE);

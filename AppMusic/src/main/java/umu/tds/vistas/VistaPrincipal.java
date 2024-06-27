@@ -188,6 +188,12 @@ public class VistaPrincipal extends JFrame {
 		JButton botonPlayLists = new JButton("Mis playlists");
 		botonPlayLists.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try {
+					panelMisPlayLists.actualizar();
+				} catch (DAOException | BDException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				CardLayout cl = (CardLayout) (panel_2.getLayout());
 				cl.show(panel_2, "MisPlayLists");
 			}
@@ -245,7 +251,7 @@ public class VistaPrincipal extends JFrame {
 					e1.printStackTrace();
 				}
 				if (generarPDF) {
-					JOptionPane.showMessageDialog(VistaPrincipal.this, "PDF generado con éxito", "Generar PDF",
+					JOptionPane.showMessageDialog(VistaPrincipal.this, "PDF generado con éxito en ./pdf", "Generar PDF",
 							JOptionPane.INFORMATION_MESSAGE);
 				} else {
 					JOptionPane.showMessageDialog(VistaPrincipal.this, "Error al generar el PDF", "Generar PDF",

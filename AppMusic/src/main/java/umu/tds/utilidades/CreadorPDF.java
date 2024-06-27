@@ -1,5 +1,6 @@
 package umu.tds.utilidades;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.List;
@@ -25,6 +26,13 @@ public enum CreadorPDF {
 
     public void generarPDF(Usuario usuario) throws FileNotFoundException, DocumentException {
         List<PlayList> listas = usuario.getPlayLists();
+        
+        // Se crea el directorio si no existe
+        File dir = new File(DIRECTORIO_PDF);
+        if (!dir.exists()) {
+            dir.mkdirs(); 
+        }
+        
         Document pdf = crearPDF(usuario);
         pdf.open();
 
