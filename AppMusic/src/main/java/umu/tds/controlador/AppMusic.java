@@ -1,14 +1,18 @@
 package umu.tds.controlador;
 
-import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.swing.JFileChooser;
+import org.kohsuke.github.GHUser;
+import org.kohsuke.github.GitHub;
+import org.kohsuke.github.GitHubBuilder;
 
 import com.itextpdf.text.DocumentException;
 
@@ -24,7 +28,6 @@ import umu.tds.dominio.repositorios.RepositorioUsuarios;
 import umu.tds.persistencia.DAOException;
 import umu.tds.persistencia.FactoriaDAO;
 import umu.tds.persistencia.IAdaptadorCancionDAO;
-import umu.tds.persistencia.IAdaptadorEstiloMusicalDAO;
 import umu.tds.persistencia.IAdaptadorPlayListDAO;
 import umu.tds.persistencia.IAdaptadorUsuarioDAO;
 import umu.tds.utilidades.CargadorCancionesDisco;
@@ -36,7 +39,6 @@ public class AppMusic implements ICargadoListener {
 
 	private IAdaptadorUsuarioDAO adaptadorUsuario;
 	private IAdaptadorCancionDAO adaptadorCancion;
-	private IAdaptadorEstiloMusicalDAO adaptadorEstiloMusical;
 	private IAdaptadorPlayListDAO adaptadorPlayList;
 
 	private RepositorioCanciones repositorioCanciones;
@@ -94,12 +96,17 @@ public class AppMusic implements ICargadoListener {
 		return repositorioUsuarios.getUsuario(username) != null;
 	}
 
-	public boolean registro(String username, String nombre, String apellidos, String fechaNacimiento, String email,
-			LocalDate fecha, String contrasena) {
+	public boolean registro(String username, String nombre, String email,
+			Date fecha, String contrasena) {
+		
+		LocalDate fechaLcl = fecha.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
 
-		Usuario usuario = new Usuario(username, nombre, apellidos, email, fecha, contrasena);
+		Usuario usuario = new Usuario(username, nombre, email, fechaLcl, contrasena);
 		adaptadorUsuario.registrarUsuario(usuario);
 		repositorioUsuarios.addUsuario(usuario);
+		setUsuarioActual(usuario);
 		return true;
 	}
 
@@ -118,6 +125,30 @@ public class AppMusic implements ICargadoListener {
 			return true;
 		}
 		return false;
+	}
+	
+	public boolean loginGithub(String username, String githubPropertiesPath) {
+		try {
+			GitHub github = GitHubBuilder.fromPropertyFile(githubPropertiesPath).build();
+
+			if (github.isCredentialValid()) {
+				GHUser ghuser = github.getMyself();
+
+				if (ghuser.getLogin().equals(username) && github.isCredentialValid()) {
+
+					if (isRegistrado(username)) {
+						usuarioActual = repositorioUsuarios.getUsuario(username);
+						return true;
+					}
+				}
+			}
+			return false;
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return false;
+
 	}
 
 	public List<PlayList> getPlayListsUsuario() {
@@ -176,7 +207,7 @@ public class AppMusic implements ICargadoListener {
 		repositorioCanciones.removeCancion(cancion);
 	}
 
-	public void addCancionRecientes(Cancion cancion) {
+	public void addCancionARecientes(Cancion cancion) {
 		if (usuarioActual != null)
 			usuarioActual.addCancionReciente(cancion);
 
@@ -228,6 +259,13 @@ public class AppMusic implements ICargadoListener {
 
 	public List<Cancion> filtroTitulo(String titulo, List<Cancion> canciones) {
 		return canciones.stream().filter(t -> t.getTitulo().toLowerCase().contains(titulo.toLowerCase()))
+				.collect(Collectors.toList());
+	}
+	
+	public List<Cancion> filtroFavoritas(List<Cancion> canciones) {
+		List<Cancion> cancionesPlaylists = getCancionesPlayList();
+		return canciones.stream()
+				.filter(c1 -> cancionesPlaylists.stream().anyMatch(c2 -> c2.getCodigo() == c1.getCodigo()))
 				.collect(Collectors.toList());
 	}
 

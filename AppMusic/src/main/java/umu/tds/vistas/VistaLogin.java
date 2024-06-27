@@ -1,6 +1,7 @@
 package umu.tds.vistas;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -8,26 +9,31 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.SystemColor;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.LineBorder;
-import javax.swing.ImageIcon;
-import java.awt.Color;
-import java.awt.Toolkit;
+
+import umu.tds.controlador.AppMusic;
+import umu.tds.dominio.repositorios.BDException;
+import umu.tds.persistencia.DAOException;
 
 public class VistaLogin {
 
 	private JFrame frame;
-	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField textFieldUsuario;
+	private JPasswordField passwordFieldContrasena;
 
 	/**
 	 * Launch the application.
@@ -64,7 +70,7 @@ public class VistaLogin {
 		}
 		frame = new JFrame();
 		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(VistaLogin.class.getResource("/umu/tds/imagenes/logo3.png")));
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(100, 100, 530, 491);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
 		
@@ -96,15 +102,15 @@ public class VistaLogin {
 		gbc_lblUsuario.gridy = 3;
 		panelLogin.add(lblUsuario, gbc_lblUsuario);
 		
-		textField = new JTextField();
-		textField.setBorder(new LineBorder(SystemColor.activeCaptionBorder, 2, true));
-		GridBagConstraints gbc_textField = new GridBagConstraints();
-		gbc_textField.fill = GridBagConstraints.BOTH;
-		gbc_textField.insets = new Insets(0, 0, 5, 5);
-		gbc_textField.gridx = 2;
-		gbc_textField.gridy = 3;
-		panelLogin.add(textField, gbc_textField);
-		textField.setColumns(10);
+		textFieldUsuario = new JTextField();
+		textFieldUsuario.setBorder(new LineBorder(SystemColor.activeCaptionBorder, 2, true));
+		GridBagConstraints gbc_textFieldUsuario = new GridBagConstraints();
+		gbc_textFieldUsuario.fill = GridBagConstraints.BOTH;
+		gbc_textFieldUsuario.insets = new Insets(0, 0, 5, 5);
+		gbc_textFieldUsuario.gridx = 2;
+		gbc_textFieldUsuario.gridy = 3;
+		panelLogin.add(textFieldUsuario, gbc_textFieldUsuario);
+		textFieldUsuario.setColumns(10);
 		
 		JLabel lblContraseña = new JLabel("Contraseña");
 		GridBagConstraints gbc_lblContraseña = new GridBagConstraints();
@@ -114,15 +120,13 @@ public class VistaLogin {
 		gbc_lblContraseña.gridy = 4;
 		panelLogin.add(lblContraseña, gbc_lblContraseña);
 		
-		textField_1 = new JTextField();
-		textField_1.setBorder(new LineBorder(SystemColor.activeCaptionBorder, 2, true));
-		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
-		gbc_textField_1.fill = GridBagConstraints.BOTH;
-		gbc_textField_1.insets = new Insets(0, 0, 5, 5);
-		gbc_textField_1.gridx = 2;
-		gbc_textField_1.gridy = 4;
-		panelLogin.add(textField_1, gbc_textField_1);
-		textField_1.setColumns(10);
+		passwordFieldContrasena = new JPasswordField();
+		GridBagConstraints gbc_passwordFieldContrasena = new GridBagConstraints();
+		gbc_passwordFieldContrasena.insets = new Insets(0, 0, 5, 5);
+		gbc_passwordFieldContrasena.fill = GridBagConstraints.BOTH;
+		gbc_passwordFieldContrasena.gridx = 2;
+		gbc_passwordFieldContrasena.gridy = 4;
+		panelLogin.add(passwordFieldContrasena, gbc_passwordFieldContrasena);
 		
 		JPanel panel = new JPanel();
 		GridBagConstraints gbc_panel = new GridBagConstraints();
@@ -144,10 +148,42 @@ public class VistaLogin {
 		botonLoginGitHub.setAlignmentX(Component.CENTER_ALIGNMENT);
 		botonLoginGitHub.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 			}
 		});
 		
 		JButton botonLogin = new JButton("Login");
+		botonLogin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(textFieldUsuario.getText().isEmpty() || textFieldUsuario.getText().isBlank() || passwordFieldContrasena.getPassword().equals(0)) {
+					JOptionPane.showMessageDialog(null, "Nombre de usuario o contraseña vacios", "Login AppMusic",
+							JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				boolean login = false;
+				try {
+					login = AppMusic.getUnicaInstancia().login(textFieldUsuario.getText(),
+							new String(passwordFieldContrasena.getPassword()));
+				} catch (DAOException | BDException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				if (login) {
+					VistaPrincipal principal = null;
+					try {
+						principal = new VistaPrincipal();
+					} catch (DAOException | BDException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					principal.setLocationRelativeTo(null);
+					principal.setVisible(true);
+				} else {
+					JOptionPane.showMessageDialog(null, "Nombre de usuario o contraseña incorrectos", "Login AppMusic",
+							JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
 		botonLogin.setIcon(new ImageIcon(VistaLogin.class.getResource("/umu/tds/imagenes/icons8-login-24.png")));
 		botonLogin.setBorder(new LineBorder(SystemColor.activeCaptionBorder, 2, true));
 		botonLogin.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -182,6 +218,11 @@ public class VistaLogin {
 		btnRegistro.setBorder(new LineBorder(SystemColor.activeCaptionBorder, 2, true));
 		btnRegistro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				VistaRegister registro = new VistaRegister();
+				registro.setLocationRelativeTo(null);
+				registro.setVisible(true);
+				registro.setResizable(false);
+				frame.dispose();
 			}
 		});
 		GridBagConstraints gbc_btnRegistro = new GridBagConstraints();

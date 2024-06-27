@@ -6,15 +6,14 @@ import java.util.LinkedList;
 import java.util.List;
 
 import umu.tds.dominio.descuentos.Descuento65;
-import umu.tds.dominio.descuentos.DescuentoNulo;
 import umu.tds.dominio.descuentos.DescuentoJoven;
+import umu.tds.dominio.descuentos.DescuentoNulo;
 import umu.tds.dominio.descuentos.IDescuento;
 
 public class Usuario {
 	private int codigo;
 	private String username;
 	private String nombre;
-	private String apellidos;
 	private String email;
 	private LocalDate fecha;
 	private String contrasena;
@@ -23,11 +22,10 @@ public class Usuario {
 	private List<PlayList> playLists;
 	private List<Cancion> cancionesRecientes;
 
-	public Usuario(String username, String nombre, String apellidos, String email, LocalDate fecha, String contrasena) {
+	public Usuario(String username, String nombre, String email, LocalDate fecha, String contrasena) {
 		this.codigo = 0;
 		this.username = username;
 		this.nombre = nombre;
-		this.apellidos = apellidos;
 		this.email = email;
 		this.fecha = fecha;
 		this.contrasena = contrasena;
@@ -104,14 +102,6 @@ public class Usuario {
 		this.username = username;
 	}
 
-	public String getApellidos() {
-		return apellidos;
-	}
-
-	public void setApellidos(String apellidos) {
-		this.apellidos = apellidos;
-	}
-
 	public LocalDate getFecha() {
 		return fecha;
 	}
@@ -152,5 +142,17 @@ public class Usuario {
 
 	public void removePlayList(PlayList playList) {
 		this.playLists.remove(playList);
+	}
+	
+	public void addCancionReciente(Cancion cancion, int max) {
+		if(!cancionesRecientes.contains(cancion)) {
+			cancionesRecientes.add(cancion);
+			
+			if (cancionesRecientes.size() > max)
+				cancionesRecientes.remove(0);
+		} else {
+			cancionesRecientes.remove(cancion);
+			cancionesRecientes.add(cancion);
+		}
 	}
 }

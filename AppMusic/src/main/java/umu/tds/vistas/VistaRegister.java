@@ -16,20 +16,28 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
+
 import com.toedter.calendar.JDateChooser;
+
+import umu.tds.controlador.AppMusic;
+import umu.tds.dominio.repositorios.BDException;
+import umu.tds.persistencia.DAOException;
 
 public class VistaRegister extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
+	private JTextField textFieldUsername;
+	private JTextField textFieldNombre;
+	private JPasswordField passwordField;
+	private JTextField textFieldEmail;
 
 	/**
 	 * Launch the application.
@@ -59,16 +67,16 @@ public class VistaRegister extends JFrame {
 	public VistaRegister() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(VistaRegister.class.getResource("/umu/tds/imagenes/logo3.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 693, 330);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
 		gbl_contentPane.columnWidths = new int[]{30, 0, 0, 30, 0};
-		gbl_contentPane.rowHeights = new int[]{30, 0, 20, 0, 30, 0, 0, 30, 0};
+		gbl_contentPane.rowHeights = new int[]{30, 0, 20, 0, 30, 0, 0, 0, 30, 0};
 		gbl_contentPane.columnWeights = new double[]{0.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
-		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
 		
 		JLabel lblNewLabel_4 = new JLabel("Registro");
@@ -92,9 +100,9 @@ public class VistaRegister extends JFrame {
 		JLabel lblNewLabel = new JLabel("Usuario ");
 		panel.add(lblNewLabel);
 		
-		textField = new JTextField();
-		panel.add(textField);
-		textField.setColumns(10);
+		textFieldUsername = new JTextField();
+		panel.add(textFieldUsername);
+		textFieldUsername.setColumns(10);
 		
 		JPanel panel_1 = new JPanel();
 		GridBagConstraints gbc_panel_1 = new GridBagConstraints();
@@ -108,9 +116,8 @@ public class VistaRegister extends JFrame {
 		JLabel lblNewLabel_1 = new JLabel("Contraseña ");
 		panel_1.add(lblNewLabel_1);
 		
-		textField_1 = new JTextField();
-		panel_1.add(textField_1);
-		textField_1.setColumns(10);
+		passwordField = new JPasswordField();
+		panel_1.add(passwordField);
 		
 		JPanel panel_2 = new JPanel();
 		GridBagConstraints gbc_panel_2 = new GridBagConstraints();
@@ -125,9 +132,26 @@ public class VistaRegister extends JFrame {
 		JLabel lblNewLabel_2 = new JLabel("Nombre completo ");
 		panel_2.add(lblNewLabel_2);
 		
-		textField_2 = new JTextField();
-		panel_2.add(textField_2);
-		textField_2.setColumns(10);
+		textFieldNombre = new JTextField();
+		panel_2.add(textFieldNombre);
+		textFieldNombre.setColumns(10);
+		
+		JPanel panel_5 = new JPanel();
+		GridBagConstraints gbc_panel_5 = new GridBagConstraints();
+		gbc_panel_5.gridwidth = 2;
+		gbc_panel_5.insets = new Insets(0, 0, 5, 5);
+		gbc_panel_5.fill = GridBagConstraints.BOTH;
+		gbc_panel_5.gridx = 1;
+		gbc_panel_5.gridy = 5;
+		contentPane.add(panel_5, gbc_panel_5);
+		panel_5.setLayout(new BoxLayout(panel_5, BoxLayout.X_AXIS));
+		
+		JLabel lblNewLabel_2_1 = new JLabel("Email ");
+		panel_5.add(lblNewLabel_2_1);
+		
+		textFieldEmail = new JTextField();
+		panel_5.add(textFieldEmail);
+		textFieldEmail.setColumns(10);
 		
 		JPanel panel_3 = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) panel_3.getLayout();
@@ -136,11 +160,8 @@ public class VistaRegister extends JFrame {
 		gbc_panel_3.insets = new Insets(0, 0, 5, 5);
 		gbc_panel_3.fill = GridBagConstraints.BOTH;
 		gbc_panel_3.gridx = 2;
-		gbc_panel_3.gridy = 5;
+		gbc_panel_3.gridy = 6;
 		contentPane.add(panel_3, gbc_panel_3);
-		
-		JDateChooser dateChooser_1 = new JDateChooser();
-		panel_3.add(dateChooser_1);
 		
 		JLabel lblNewLabel_3 = new JLabel("Fecha de nacimiento ");
 		panel_3.add(lblNewLabel_3);
@@ -154,18 +175,41 @@ public class VistaRegister extends JFrame {
 		gbc_panel_4.insets = new Insets(0, 0, 5, 5);
 		gbc_panel_4.fill = GridBagConstraints.BOTH;
 		gbc_panel_4.gridx = 1;
-		gbc_panel_4.gridy = 6;
+		gbc_panel_4.gridy = 7;
 		contentPane.add(panel_4, gbc_panel_4);
 		panel_4.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JButton btnNewButton = new JButton("Registro");
-		btnNewButton.setIcon(new ImageIcon(VistaRegister.class.getResource("/umu/tds/imagenes/icons8-register-24.png")));
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton btnRegistro = new JButton("Registro");
+		btnRegistro.setIcon(new ImageIcon(VistaRegister.class.getResource("/umu/tds/imagenes/icons8-register-24.png")));
+		btnRegistro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				boolean registro = false;
+				try {
+					registro = AppMusic.getUnicaInstancia().registro(
+							textFieldUsername.getText(), textFieldNombre.getText(), textFieldEmail.getText(), dateChooser.getDate(), new String(passwordField.getPassword()));
+				} catch (DAOException | BDException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				if(registro) {
+					JOptionPane.showMessageDialog(null, "Usuario registrado correctamente.", "Registro AppMusic", JOptionPane.INFORMATION_MESSAGE);
+					VistaPrincipal principal = null;
+					try {
+						principal = new VistaPrincipal();
+					} catch (DAOException | BDException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					principal.setLocationRelativeTo(null);
+					principal.setVisible(true);
+					dispose();
+				} else {
+					JOptionPane.showMessageDialog(null, "Error: Nombre de usuario o email ya registrados.", "Registro AppMusic", JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		});
-		btnNewButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-		panel_4.add(btnNewButton);
+		btnRegistro.setAlignmentX(Component.CENTER_ALIGNMENT);
+		panel_4.add(btnRegistro);
 	}
 
 }

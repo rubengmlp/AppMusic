@@ -3,7 +3,7 @@ package umu.tds.persistencia;
 public abstract class FactoriaDAO {
 	
 	private static FactoriaDAO unicaInstancia;
-	public static final String DAO_TDS = "umu.persistencia.TDSFactoriaDAO";
+	public static final String DAO_TDS = "umu.tds.persistencia.TDSFactoriaDAO";
 	
 	public static FactoriaDAO getInstancia(String tipo) throws DAOException{
 		if(unicaInstancia == null)
@@ -25,7 +25,6 @@ public abstract class FactoriaDAO {
 	
 	public abstract IAdaptadorUsuarioDAO getUsuarioDAO();
 	public abstract IAdaptadorCancionDAO getCancionDAO();
-	public abstract IAdaptadorEstiloMusicalDAO getEstiloMusicalDAO();
 	public abstract IAdaptadorPlayListDAO getPlayListDAO();
 	
 }

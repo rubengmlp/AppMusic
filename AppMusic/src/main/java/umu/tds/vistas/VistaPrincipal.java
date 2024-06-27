@@ -160,7 +160,7 @@ public class VistaPrincipal extends JFrame {
 		botonRecientes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CardLayout cl = (CardLayout)(panel_2.getLayout());
-		        cl.show(panel_2, "MasReproducidas");
+		        cl.show(panel_2, "Recientes");
 			}
 		});
 		panel_5.add(botonRecientes);
@@ -274,13 +274,14 @@ public class VistaPrincipal extends JFrame {
 				if (opcion == JOptionPane.OK_OPTION) {
 					try {
 						AppMusic.getUnicaInstancia().setUsuarioPremium();
+						
 					} catch (DAOException | BDException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-//					btnPremium.setVisible(false);
-//					btnMasPopulares.setVisible(true);
-//					btnGenerarPDF.setVisible(true);
+					btnPremium.setVisible(false);
+					panel_masRepro.setVisible(true);
+					panel_pdf.setVisible(true);
 				}
 		}});
 		

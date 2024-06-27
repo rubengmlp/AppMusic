@@ -56,7 +56,6 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 	    entidadUsuario.setPropiedades(Arrays.asList(
 	    	new Propiedad("username", usuario.getUsername()),
 	        new Propiedad("nombre", usuario.getNombre()),
-	        new Propiedad("apellidos", usuario.getApellidos()),
 	        new Propiedad("fechaNacimiento",dateFormat.format(usuario.getFecha())),
 			new Propiedad("email", usuario.getEmail()),
 			new Propiedad("contraseña", usuario.getContrasena()),
@@ -96,8 +95,6 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 	            prop.setValor(usuario.getUsername());
 	        } else if (prop.getNombre().equals("nombre")) {
 	            prop.setValor(usuario.getNombre());
-	        } else if (prop.getNombre().equals("apellidos")) {
-	            prop.setValor(usuario.getApellidos());
 	        } else if (prop.getNombre().equals("fechaNacimiento")) {
 	            prop.setValor(dateFormat.format(usuario.getFecha()));
 	        } else if (prop.getNombre().equals("email")) {
@@ -135,7 +132,6 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 	    // Recuperar propiedades que no son objetos
 	    String username = servPersistencia.recuperarPropiedadEntidad(eUsuario, "username");
 	    String nombre = servPersistencia.recuperarPropiedadEntidad(eUsuario, "nombre");
-	    String apellidos = servPersistencia.recuperarPropiedadEntidad(eUsuario, "apellidos");
 	    LocalDate fecha = LocalDate.parse(servPersistencia.recuperarPropiedadEntidad(eUsuario, "fechaNacimiento"), dateFormat);
 		String email = servPersistencia.recuperarPropiedadEntidad(eUsuario, "email");
 		
@@ -143,7 +139,7 @@ public class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 
 		boolean premium = Boolean.valueOf(servPersistencia.recuperarPropiedadEntidad(eUsuario, "premium"));
 
-	    Usuario usuario = new Usuario (username, nombre, apellidos, email, fecha, contrasena);
+	    Usuario usuario = new Usuario (username, nombre, email, fecha, contrasena);
 	    usuario.setCodigo(codigo);
 	    usuario.setPremium(premium);
 
