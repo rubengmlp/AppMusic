@@ -15,15 +15,17 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import umu.tds.dominio.Cancion;
-import umu.tds.dominio.Usuario;
 import umu.tds.dominio.PlayList;
+import umu.tds.dominio.Usuario;
 
-public class CreadorPDF {
+public enum CreadorPDF {
+	INSTANCE; 
+	
     private static final String DIRECTORIO_PDF = "./pdf";
 
     public void generarPDF(Usuario usuario) throws FileNotFoundException, DocumentException {
         List<PlayList> listas = usuario.getPlayLists();
-        Document pdf = crearPDF();
+        Document pdf = crearPDF(usuario);
         pdf.open();
 
         pdf.add(new Paragraph("Listas de canciones de " + usuario.getNombre() + ":", 
@@ -53,8 +55,8 @@ public class CreadorPDF {
     }
 
 
-    private static Document crearPDF() throws FileNotFoundException, DocumentException {
-        FileOutputStream outputFile = new FileOutputStream(DIRECTORIO_PDF + "/listas_canciones.pdf");
+    private static Document crearPDF(Usuario usuario) throws FileNotFoundException, DocumentException {
+        FileOutputStream outputFile = new FileOutputStream(DIRECTORIO_PDF + "/" + usuario.getUsername() + ".pdf");
         Document pdf = new Document();
         PdfWriter.getInstance(pdf, outputFile);
         return pdf;

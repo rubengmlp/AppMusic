@@ -11,14 +11,18 @@ import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
+
+import com.itextpdf.text.DocumentException;
 
 import umu.tds.controlador.AppMusic;
 import umu.tds.dominio.Cancion;
@@ -29,6 +33,11 @@ public class VistaPrincipal extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	private PanelBuscar panelBuscar;
+	private PanelGestion panelGestion;
+	private PanelMasReproducidas panelMasReproducidas;
+	private PanelRecientes panelRecientes;
+	private PanelMisPlayLists panelMisPlayLists;
 
 	/**
 	 * Launch the application.
@@ -62,6 +71,22 @@ public class VistaPrincipal extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
+		
+		JPanel panel_2 = new JPanel();
+		contentPane.add(panel_2, BorderLayout.CENTER);
+		panel_2.setLayout(new CardLayout(0, 0));
+		
+		panelBuscar = new PanelBuscar();
+		panelGestion = new PanelGestion();
+		panelMasReproducidas = new PanelMasReproducidas();
+		panelRecientes = new PanelRecientes();
+		panelMisPlayLists = new PanelMisPlayLists();
+		
+		panel_2.add(panelBuscar, "Buscar");
+		panel_2.add(panelGestion, "Gestionar");
+		panel_2.add(panelMasReproducidas, "MasReproducidas");
+		panel_2.add(panelRecientes, "Recientes");
+		panel_2.add(panelMisPlayLists, "MisPlayLists");
 
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Men\u00FA", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -89,6 +114,12 @@ public class VistaPrincipal extends JFrame {
 		panel_3.add(lblNewLabel_1);
 
 		JButton botonBuscar = new JButton("Buscar");
+		botonBuscar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CardLayout cl = (CardLayout)(panel_2.getLayout());
+		        cl.show(panel_2, "Buscar");
+			}
+		});
 		panel_3.add(botonBuscar);
 
 		JPanel panel_4 = new JPanel();
@@ -105,6 +136,12 @@ public class VistaPrincipal extends JFrame {
 		panel_4.add(lblNewLabel_2);
 
 		JButton botonGestionar = new JButton("Gestionar playlists");
+		botonGestionar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CardLayout cl = (CardLayout)(panel_2.getLayout());
+		        cl.show(panel_2, "Gestionar");
+			}
+		});
 		panel_4.add(botonGestionar);
 
 		JPanel panel_5 = new JPanel();
@@ -120,6 +157,12 @@ public class VistaPrincipal extends JFrame {
 		panel_5.add(lblNewLabel_3);
 
 		JButton botonRecientes = new JButton("Recientes");
+		botonRecientes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CardLayout cl = (CardLayout)(panel_2.getLayout());
+		        cl.show(panel_2, "MasReproducidas");
+			}
+		});
 		panel_5.add(botonRecientes);
 
 		JPanel panel_masRepro = new JPanel();
@@ -137,6 +180,8 @@ public class VistaPrincipal extends JFrame {
 		JButton btnMasReproducidas = new JButton("Más reproducidas");
 		btnMasReproducidas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				CardLayout cl = (CardLayout)(panel_2.getLayout());
+		        cl.show(panel_2, "MasReproducidas");
 			}
 		});
 		panel_masRepro.add(btnMasReproducidas);
@@ -154,6 +199,24 @@ public class VistaPrincipal extends JFrame {
 		panel_pdf.add(lblNewLabel_3_1);
 
 		JButton btnGenerarPdf = new JButton("Generar PDF");
+		btnGenerarPdf.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				boolean generarPDF = false;
+				try {
+					generarPDF = AppMusic.getUnicaInstancia().generarPDF();
+				} catch (FileNotFoundException | DocumentException | DAOException | BDException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				if (generarPDF) {
+					JOptionPane.showMessageDialog(VistaPrincipal.this, "PDF generado con éxito", "Generar PDF",
+							JOptionPane.INFORMATION_MESSAGE);
+				} else {
+					JOptionPane.showMessageDialog(VistaPrincipal.this, "Error al generar el PDF", "Generar PDF",
+							JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
 		panel_pdf.add(btnGenerarPdf);
 
 		// mostrar solo si es premium
@@ -179,6 +242,12 @@ public class VistaPrincipal extends JFrame {
 		panel_6.add(lblNewLabel_4);
 
 		JButton botonPlayLists = new JButton("Mis playlists");
+		botonPlayLists.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CardLayout cl = (CardLayout)(panel_2.getLayout());
+		        cl.show(panel_2, "MisPlayLists");
+			}
+		});
 		panel_6.add(botonPlayLists);
 
 		JPanel panel_1 = new JPanel();
@@ -186,16 +255,46 @@ public class VistaPrincipal extends JFrame {
 		flowLayout.setAlignment(FlowLayout.RIGHT);
 		contentPane.add(panel_1, BorderLayout.NORTH);
 
-		JLabel lblNewLabel = new JLabel("Bienvenido, usuario");
+		JLabel lblNewLabel = new JLabel("Bienvenido, " + AppMusic.getUnicaInstancia().getUsername());
 		panel_1.add(lblNewLabel);
 
-		JButton btnNewButton_4 = new JButton("Premium");
-		btnNewButton_4
+		JButton btnPremium = new JButton("Premium");
+		btnPremium.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				double precio = 10;
+				try {
+					precio = AppMusic.getUnicaInstancia().getPrecioPremium();
+				} catch (DAOException | BDException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				int opcion = JOptionPane.showConfirmDialog(null,
+						"¿Seguro que quiere hacerse usuario premium por " + precio + "€?", "Hacerse premium",
+						JOptionPane.OK_CANCEL_OPTION);
+				if (opcion == JOptionPane.OK_OPTION) {
+					try {
+						AppMusic.getUnicaInstancia().setUsuarioPremium();
+					} catch (DAOException | BDException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+//					btnPremium.setVisible(false);
+//					btnMasPopulares.setVisible(true);
+//					btnGenerarPDF.setVisible(true);
+				}
+		}});
+		
+		btnPremium
 				.setIcon(new ImageIcon(VistaPrincipal.class.getResource("/umu/tds/imagenes/icons8-premium-24.png")));
-		panel_1.add(btnNewButton_4);
+		panel_1.add(btnPremium);
+		if (AppMusic.getUnicaInstancia().isUsuarioPremium()) {
+			btnPremium.setVisible(false);
+		} else {
+			btnPremium.setVisible(true);
+		}
 
-		JButton btnNewButton_5 = new JButton("Logout");
-		btnNewButton_5.addActionListener(new ActionListener() {
+		JButton btnLogout = new JButton("Logout");
+		btnLogout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				VistaLogin login = new VistaLogin();
 				login.mostrar();
@@ -219,19 +318,12 @@ public class VistaPrincipal extends JFrame {
 				}
 			}
 		});
-		btnNewButton_5
+		btnLogout
 				.setIcon(new ImageIcon(VistaPrincipal.class.getResource("/umu/tds/imagenes/icons8-logout-24.png")));
-		panel_1.add(btnNewButton_5);
+		panel_1.add(btnLogout);
 
-		JPanel panel_2 = new JPanel();
-		contentPane.add(panel_2, BorderLayout.CENTER);
-		panel_2.setLayout(new CardLayout(0, 0));
-
-		JPanel panel_buscar = new JPanel();
-		panel_2.add(panel_buscar, "name_545149146535099");
-
-		JPanel panel_recientes = new JPanel();
-		panel_2.add(panel_recientes, "name_545151512970900");
+		
+		
 	}
 
 }

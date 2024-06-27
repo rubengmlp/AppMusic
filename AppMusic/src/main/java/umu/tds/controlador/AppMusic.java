@@ -1,10 +1,16 @@
 package umu.tds.controlador;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import javax.swing.JFileChooser;
+
+import com.itextpdf.text.DocumentException;
 
 import tds.CargadorCanciones.CancionesEvent;
 import tds.CargadorCanciones.CargadorCanciones;
@@ -22,6 +28,7 @@ import umu.tds.persistencia.IAdaptadorEstiloMusicalDAO;
 import umu.tds.persistencia.IAdaptadorPlayListDAO;
 import umu.tds.persistencia.IAdaptadorUsuarioDAO;
 import umu.tds.utilidades.CargadorCancionesDisco;
+import umu.tds.utilidades.CreadorPDF;
 import umu.tds.utilidades.Player;
 
 public class AppMusic implements ICargadoListener {
@@ -37,6 +44,7 @@ public class AppMusic implements ICargadoListener {
 
 	private static Usuario usuarioActual;
 	private Player reproductor;
+	private static final double COSTE_PREMIUM = 10;
 
 	private AppMusic() throws DAOException, BDException {
 		try {
@@ -49,7 +57,7 @@ public class AppMusic implements ICargadoListener {
 			throw new BDException(e.getMessage());
 		}
 	}
-	
+
 	public static AppMusic getUnicaInstancia() throws DAOException, BDException {
 		if (unicaInstancia == null)
 			unicaInstancia = new AppMusic();
@@ -77,6 +85,10 @@ public class AppMusic implements ICargadoListener {
 	}
 
 	// USUARIOS
+
+	public String getUsername() {
+		return usuarioActual.getUsername();
+	}
 
 	public boolean isRegistrado(String username) {
 		return repositorioUsuarios.getUsuario(username) != null;
@@ -114,7 +126,7 @@ public class AppMusic implements ICargadoListener {
 			playLists = usuarioActual.getPlayLists();
 		return playLists;
 	}
-	
+
 	public boolean isUsuarioPremium() {
 		return usuarioActual.isPremium();
 	}
@@ -131,6 +143,20 @@ public class AppMusic implements ICargadoListener {
 
 	public List<Usuario> getTodosUsuarios() {
 		return repositorioUsuarios.getAll();
+	}
+
+	public double getPrecioPremium() {
+		int descuento = usuarioActual.getDescuento().getDescuento();
+		double precioFinal = (COSTE_PREMIUM - (COSTE_PREMIUM * descuento) / 100);
+		return precioFinal;
+	}
+
+	public boolean generarPDF() throws FileNotFoundException, DocumentException {
+		if (usuarioActual.isPremium()) {
+			CreadorPDF.INSTANCE.generarPDF(usuarioActual);
+			return true;
+		}
+		return false;
 	}
 
 	// CANCIONES
@@ -164,8 +190,7 @@ public class AppMusic implements ICargadoListener {
 	}
 
 	public List<Cancion> getCancionesPlayList() {
-		return usuarioActual.getPlayLists().stream() 
-				.flatMap(playlist -> playlist.getCanciones().stream()) 					
+		return usuarioActual.getPlayLists().stream().flatMap(playlist -> playlist.getCanciones().stream())
 				.collect(Collectors.toList());
 	}
 
@@ -175,7 +200,7 @@ public class AppMusic implements ICargadoListener {
 		c.addOyente(this);
 		c.setArchivoCanciones(fichero);
 	}
-	
+
 	public void cargarCancionesEnDisco() throws Exception {
 		CargadorCancionesDisco.INSTANCE.cargarCanciones();
 	}
@@ -205,7 +230,6 @@ public class AppMusic implements ICargadoListener {
 		return canciones.stream().filter(t -> t.getTitulo().toLowerCase().contains(titulo.toLowerCase()))
 				.collect(Collectors.toList());
 	}
-
 
 	// PLAYLISTS
 
@@ -245,14 +269,14 @@ public class AppMusic implements ICargadoListener {
 			adaptadorPlayList.modificarPlayList(playList);
 		}
 	}
-	
-	//Player
+
+	// Player
 	public void iniciarReproduccion(Cancion cancion) {
 		reproductor.play("play", cancion);
 		cancion.setNumRep(cancion.getNumRep() + 1);
 		adaptadorCancion.modificarCancion(cancion);
 	}
-	
+
 	public void pausarReproduccion(Cancion cancion) {
 		reproductor.play("pause", cancion);
 	}

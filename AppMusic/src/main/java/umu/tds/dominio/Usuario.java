@@ -7,7 +7,7 @@ import java.util.List;
 
 import umu.tds.dominio.descuentos.Descuento65;
 import umu.tds.dominio.descuentos.DescuentoNulo;
-import umu.tds.dominio.descuentos.DescuentoPremium;
+import umu.tds.dominio.descuentos.DescuentoJoven;
 import umu.tds.dominio.descuentos.IDescuento;
 
 public class Usuario {
@@ -136,8 +136,8 @@ public class Usuario {
 		LocalDate fechaActual = LocalDate.now();
 		if (Period.between(fecha, fechaActual).getYears() >= 65)
 			return new Descuento65();
-		else if (this.premium)
-			return new DescuentoPremium();
+		else if (Period.between(fecha, fechaActual).getYears() <= 30)
+			return new DescuentoJoven();
 		else 
 			return new DescuentoNulo();		
 	}
