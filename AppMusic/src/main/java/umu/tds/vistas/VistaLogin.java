@@ -77,16 +77,16 @@ public class VistaLogin {
 		gbl_panelLogin.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panelLogin.setLayout(gbl_panelLogin);
 		
-		JLabel lblNewLabel = new JLabel("AppMusic ");
-		lblNewLabel.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
-		lblNewLabel.setIcon(new ImageIcon(VistaLogin.class.getResource("/umu/tds/imagenes/logo3.png")));
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 26));
-		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
-		gbc_lblNewLabel.gridwidth = 2;
-		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel.gridx = 1;
-		gbc_lblNewLabel.gridy = 1;
-		panelLogin.add(lblNewLabel, gbc_lblNewLabel);
+		JLabel lblTitulo = new JLabel("AppMusic ");
+		lblTitulo.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
+		lblTitulo.setIcon(new ImageIcon(VistaLogin.class.getResource("/umu/tds/imagenes/logo3.png")));
+		lblTitulo.setFont(new Font("Tahoma", Font.BOLD, 26));
+		GridBagConstraints gbc_lblTitulo = new GridBagConstraints();
+		gbc_lblTitulo.gridwidth = 2;
+		gbc_lblTitulo.insets = new Insets(0, 0, 5, 5);
+		gbc_lblTitulo.gridx = 1;
+		gbc_lblTitulo.gridy = 1;
+		panelLogin.add(lblTitulo, gbc_lblTitulo);
 		
 		JLabel lblUsuario = new JLabel("Usuario");
 		GridBagConstraints gbc_lblUsuario = new GridBagConstraints();
