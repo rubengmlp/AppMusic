@@ -27,6 +27,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
@@ -44,11 +46,15 @@ public class PanelBuscar extends JPanel {
 	private JTextField textFieldTitulo;
 	private JTextField textFieldInterprete;
 	private JTable table;
+	private List<Cancion> seleccionadas = new LinkedList<Cancion>();
+	private List<Cancion> currentlySelected = new LinkedList<Cancion>();
 
 	/**
 	 * Create the panel.
+	 * @throws BDException 
+	 * @throws DAOException 
 	 */
-	public PanelBuscar() {
+	public PanelBuscar() throws DAOException, BDException {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 0, 0 };
 		gridBagLayout.rowHeights = new int[] { 150, 150, 25, 0 };
@@ -414,6 +420,42 @@ public class PanelBuscar extends JPanel {
 		        }
 		    }
 		});
+		
+
+		table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+		    @Override
+		    public void valueChanged(ListSelectionEvent e) {
+		        if (!e.getValueIsAdjusting()) {
+		            // Obtener las filas actualmente seleccionadas
+		            int[] selectedRows = table.getSelectedRows();
+		            Set<Cancion> newCurrentlySelected = new HashSet<>();
+
+		            for (int row : selectedRows) {
+		                newCurrentlySelected.add(canciones.get(row));
+		            }
+
+		            // Añadir nuevas selecciones
+		            for (Cancion cancion : newCurrentlySelected) {
+		                if (!currentlySelected.contains(cancion)) {
+		                    currentlySelected.add(cancion);
+		                }
+		            }
+
+		            // Eliminar deselecciones
+		            currentlySelected.removeIf(cancion -> !newCurrentlySelected.contains(cancion));
+
+		            // Actualizar la lista en AppMusic
+		            try {
+		                AppMusic.getUnicaInstancia().setListaCancionesSeleccionadas(new ArrayList<>(currentlySelected));
+		            } catch (DAOException | BDException e1) {
+		                e1.printStackTrace();
+		            }
+		        }
+		    }
+		});
+
+
+
 
 	}
 

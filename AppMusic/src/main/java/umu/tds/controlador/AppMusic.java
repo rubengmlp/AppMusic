@@ -44,6 +44,8 @@ public class AppMusic implements ICargadoListener {
 	private RepositorioCanciones repositorioCanciones;
 	private RepositorioUsuarios repositorioUsuarios;
 
+	private List<Cancion> seleccionadas;
+	
 	private static Usuario usuarioActual;
 	private Player reproductor;
 	private static final double COSTE_PREMIUM = 10;
@@ -231,6 +233,14 @@ public class AppMusic implements ICargadoListener {
 		return usuarioActual.getPlayLists().stream().flatMap(playlist -> playlist.getCanciones().stream())
 				.collect(Collectors.toList());
 	}
+	
+	public List<Cancion> getListaCancionesSeleccionadas() {
+		return seleccionadas;
+	}
+
+	public void setListaCancionesSeleccionadas(List<Cancion> canciones) {
+		seleccionadas = canciones;
+	}
 
 	// Usamos CargadorCanciones para poder cargarlas desde un fichero XML
 	public void cargarCanciones(String fichero) throws URISyntaxException {
@@ -328,7 +338,15 @@ public class AppMusic implements ICargadoListener {
 			adaptadorPlayList.modificarPlayList(playList);
 		}
 	}
-
+	
+	public void eliminarCancionesPlayList(List<Cancion> canciones, PlayList playList) {
+		if (usuarioActual != null) {
+			for (Cancion cancion : canciones) {
+				playList.deleteCancion(cancion);
+			}
+			adaptadorPlayList.modificarPlayList(playList);
+		}
+	}
 	// Player
 	public void iniciarReproduccion(Cancion cancion) {
 		reproductor.play("play", cancion);
