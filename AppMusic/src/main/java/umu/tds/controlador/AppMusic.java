@@ -47,6 +47,7 @@ public class AppMusic implements ICargadoListener {
 	private static Usuario usuarioActual;
 	private Player reproductor;
 	private static final double COSTE_PREMIUM = 10;
+	private static final int MAX_RECIENTES = 10;
 
 	private AppMusic() throws DAOException, BDException {
 		try {
@@ -209,9 +210,9 @@ public class AppMusic implements ICargadoListener {
 		repositorioCanciones.removeCancion(cancion);
 	}
 
-	public void addCancionARecientes(Cancion cancion) {
+	public void addCancionARecientes(Cancion cancion, int max) {
 		if (usuarioActual != null)
-			usuarioActual.addCancionReciente(cancion);
+			usuarioActual.addCancionReciente(cancion, max);
 
 		adaptadorUsuario.modificarUsuario(usuarioActual);
 	}
@@ -332,7 +333,7 @@ public class AppMusic implements ICargadoListener {
 	public void iniciarReproduccion(Cancion cancion) {
 		reproductor.play("play", cancion);
 		cancion.setNumRep(cancion.getNumRep() + 1);
-		addCancionARecientes(cancion);
+		addCancionARecientes(cancion, MAX_RECIENTES);
 		adaptadorCancion.modificarCancion(cancion);
 	}
 

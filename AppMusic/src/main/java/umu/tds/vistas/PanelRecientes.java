@@ -91,49 +91,134 @@ public class PanelRecientes extends JPanel {
 		gbl_panel.rowWeights = new double[]{1.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
 		
-		JButton btnNewButton = new JButton("");
-		btnNewButton.setIcon(new ImageIcon(PanelBuscar.class.getResource("/umu/tds/imagenes/atras.png")));
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton btnAtras = new JButton("");
+		btnAtras.setIcon(new ImageIcon(PanelBuscar.class.getResource("/umu/tds/imagenes/atras.png")));
+		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try {
+					Cancion c = AppMusic.getUnicaInstancia().getCancionSonando();
+					if (c != null) {
+						int fila = table.getSelectedRow();
+						if (fila == -1) {
+							return;
+						}
+						fila--;
+						if (fila < 0) {
+							fila = recientes.size() - 1;
+						}
+						AppMusic.getUnicaInstancia().detenerReproduccion(c);
+						AppMusic.getUnicaInstancia().iniciarReproduccion(recientes.get(fila));
+						table.setRowSelectionInterval(fila, fila);
+					}
+				} catch (DAOException | BDException e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
-		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
-		gbc_btnNewButton.insets = new Insets(0, 0, 0, 5);
-		gbc_btnNewButton.gridx = 1;
-		gbc_btnNewButton.gridy = 0;
-		panel.add(btnNewButton, gbc_btnNewButton);
+		GridBagConstraints gbc_btnAtras = new GridBagConstraints();
+		gbc_btnAtras.insets = new Insets(0, 0, 0, 5);
+		gbc_btnAtras.gridx = 1;
+		gbc_btnAtras.gridy = 0;
+		panel.add(btnAtras, gbc_btnAtras);
 		
-		JButton btnNewButton_1 = new JButton("");
-		btnNewButton_1.setIcon(new ImageIcon(PanelBuscar.class.getResource("/umu/tds/imagenes/detener.png")));
-		GridBagConstraints gbc_btnNewButton_1 = new GridBagConstraints();
-		gbc_btnNewButton_1.insets = new Insets(0, 0, 0, 5);
-		gbc_btnNewButton_1.gridx = 2;
-		gbc_btnNewButton_1.gridy = 0;
-		panel.add(btnNewButton_1, gbc_btnNewButton_1);
+		JButton btnDetener = new JButton("");
+		btnDetener.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Cancion cancion = AppMusic.getUnicaInstancia().getCancionSonando();
+					if (cancion != null) {
+						AppMusic.getUnicaInstancia().detenerReproduccion(cancion);
+					}
+				} catch (DAOException | BDException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnDetener.setIcon(new ImageIcon(PanelBuscar.class.getResource("/umu/tds/imagenes/detener.png")));
+		GridBagConstraints gbc_btnDetener = new GridBagConstraints();
+		gbc_btnDetener.insets = new Insets(0, 0, 0, 5);
+		gbc_btnDetener.gridx = 2;
+		gbc_btnDetener.gridy = 0;
+		panel.add(btnDetener, gbc_btnDetener);
 		
-		JButton btnNewButton_2 = new JButton("");
-		btnNewButton_2.setIcon(new ImageIcon(PanelBuscar.class.getResource("/umu/tds/imagenes/play.png")));
-		GridBagConstraints gbc_btnNewButton_2 = new GridBagConstraints();
-		gbc_btnNewButton_2.insets = new Insets(0, 0, 0, 5);
-		gbc_btnNewButton_2.gridx = 3;
-		gbc_btnNewButton_2.gridy = 0;
-		panel.add(btnNewButton_2, gbc_btnNewButton_2);
+		JButton btnPlay = new JButton("");
+		btnPlay.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int selectedRow = table.getSelectedRow();
+				if (selectedRow != -1) {
+					Cancion cancion = recientes.get(selectedRow);
+					if (cancion != null) {
+						try {
+							AppMusic.getUnicaInstancia().iniciarReproduccion(cancion);
+						} catch (DAOException | BDException e1) {
+							e1.printStackTrace();
+						}
+					}
+				}
+			}
+		});
+		btnPlay.setIcon(new ImageIcon(PanelBuscar.class.getResource("/umu/tds/imagenes/play.png")));
+		GridBagConstraints gbc_btnPlay = new GridBagConstraints();
+		gbc_btnPlay.insets = new Insets(0, 0, 0, 5);
+		gbc_btnPlay.gridx = 3;
+		gbc_btnPlay.gridy = 0;
+		panel.add(btnPlay, gbc_btnPlay);
 		
-		JButton btnNewButton_3 = new JButton("");
-		btnNewButton_3.setIcon(new ImageIcon(PanelBuscar.class.getResource("/umu/tds/imagenes/pausa.png")));
-		GridBagConstraints gbc_btnNewButton_3 = new GridBagConstraints();
-		gbc_btnNewButton_3.insets = new Insets(0, 0, 0, 5);
-		gbc_btnNewButton_3.gridx = 4;
-		gbc_btnNewButton_3.gridy = 0;
-		panel.add(btnNewButton_3, gbc_btnNewButton_3);
+		JButton btnPause = new JButton("");
+		btnPause.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Cancion cancion = AppMusic.getUnicaInstancia().getCancionSonando();
+					if (cancion != null) {
+						AppMusic.getUnicaInstancia().pausarReproduccion(cancion);
+					}
+				} catch (DAOException | BDException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnPause.setIcon(new ImageIcon(PanelBuscar.class.getResource("/umu/tds/imagenes/pausa.png")));
+		GridBagConstraints gbc_btnPause = new GridBagConstraints();
+		gbc_btnPause.insets = new Insets(0, 0, 0, 5);
+		gbc_btnPause.gridx = 4;
+		gbc_btnPause.gridy = 0;
+		panel.add(btnPause, gbc_btnPause);
 		
-		JButton btnNewButton_4 = new JButton("");
-		btnNewButton_4.setIcon(new ImageIcon(PanelBuscar.class.getResource("/umu/tds/imagenes/siguiente.png")));
-		GridBagConstraints gbc_btnNewButton_4 = new GridBagConstraints();
-		gbc_btnNewButton_4.insets = new Insets(0, 0, 0, 5);
-		gbc_btnNewButton_4.gridx = 5;
-		gbc_btnNewButton_4.gridy = 0;
-		panel.add(btnNewButton_4, gbc_btnNewButton_4);
+		JButton btnSiguiente = new JButton("");
+		btnSiguiente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Cancion cancionSonando = AppMusic.getUnicaInstancia().getCancionSonando();
+
+					if (cancionSonando != null) {
+						int filaSeleccionada = table.getSelectedRow();
+
+						if (filaSeleccionada == -1) {
+							return;
+						}
+
+						filaSeleccionada++;
+
+						if (filaSeleccionada >= recientes.size()) {
+							filaSeleccionada = 0;
+						}
+
+						AppMusic.getUnicaInstancia().detenerReproduccion(cancionSonando);
+						AppMusic.getUnicaInstancia().iniciarReproduccion(recientes.get(filaSeleccionada));
+						table.setRowSelectionInterval(filaSeleccionada, filaSeleccionada);
+					}
+				} catch (DAOException | BDException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnSiguiente.setIcon(new ImageIcon(PanelBuscar.class.getResource("/umu/tds/imagenes/siguiente.png")));
+		GridBagConstraints gbc_btnSiguiente = new GridBagConstraints();
+		gbc_btnSiguiente.insets = new Insets(0, 0, 0, 5);
+		gbc_btnSiguiente.gridx = 5;
+		gbc_btnSiguiente.gridy = 0;
+		panel.add(btnSiguiente, gbc_btnSiguiente);
 
 	}
 	

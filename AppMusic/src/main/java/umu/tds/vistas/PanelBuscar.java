@@ -232,7 +232,6 @@ public class PanelBuscar extends JPanel {
 						AppMusic.getUnicaInstancia().detenerReproduccion(c);
 						AppMusic.getUnicaInstancia().iniciarReproduccion(canciones.get(fila));
 						table.setRowSelectionInterval(fila, fila);
-						AppMusic.getUnicaInstancia().addCancionARecientes(canciones.get(fila));
 					}
 				} catch (DAOException | BDException e1) {
 					e1.printStackTrace();
@@ -275,7 +274,6 @@ public class PanelBuscar extends JPanel {
 					if (cancion != null) {
 						try {
 							AppMusic.getUnicaInstancia().iniciarReproduccion(cancion);
-							AppMusic.getUnicaInstancia().addCancionARecientes(cancion);
 						} catch (DAOException | BDException e1) {
 							e1.printStackTrace();
 						}
@@ -334,7 +332,6 @@ public class PanelBuscar extends JPanel {
 						AppMusic.getUnicaInstancia().detenerReproduccion(cancionSonando);
 						AppMusic.getUnicaInstancia().iniciarReproduccion(canciones.get(filaSeleccionada));
 						table.setRowSelectionInterval(filaSeleccionada, filaSeleccionada);
-						AppMusic.getUnicaInstancia().addCancionARecientes(canciones.get(filaSeleccionada));
 					}
 				} catch (DAOException | BDException e1) {
 					// TODO Auto-generated catch block
