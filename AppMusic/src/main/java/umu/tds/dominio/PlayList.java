@@ -48,7 +48,7 @@ public class PlayList {
 
 	public boolean contieneCancion(Cancion cancion) {
 	    for (Cancion c : canciones) {
-	        if (c.equals(cancion)) {
+	        if (c.getTitulo().equals(cancion.getTitulo())) {
 	            return true;
 	        }
 	    }

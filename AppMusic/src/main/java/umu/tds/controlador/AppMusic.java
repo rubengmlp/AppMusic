@@ -336,10 +336,18 @@ public class AppMusic implements ICargadoListener {
 
 	
 	public void addCancionesAPlayList(List<Cancion> canciones, PlayList playList) {
-		if (usuarioActual != null) {
-			playList.addCanciones(canciones);
-			adaptadorPlayList.modificarPlayList(playList);
-		}
+	    if (usuarioActual != null) {
+	        List<Cancion> cancionesAAgregar = new LinkedList<>();
+	        for (Cancion cancion : canciones) {
+	            if (!playList.getCanciones().contains(cancion)) {
+	                cancionesAAgregar.add(cancion);
+	            }
+	        }
+	        if (!cancionesAAgregar.isEmpty()) {
+	            playList.addCanciones(cancionesAAgregar);
+	                adaptadorPlayList.modificarPlayList(playList);
+	        }
+	    }
 	}
 	
 	public void eliminarCancionesPlayList(List<Cancion> canciones, PlayList playList) {
