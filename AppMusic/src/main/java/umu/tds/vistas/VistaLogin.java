@@ -191,4 +191,9 @@ public class VistaLogin {
 		panel_1.add(btnRegistro, gbc_btnRegistro);
 	}
 
+	public void mostrar() {
+		frame.setLocationRelativeTo(null);
+		frame.setVisible(true);
+		frame.setResizable(false);
+	}
 }

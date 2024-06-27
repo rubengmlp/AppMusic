@@ -1,4 +1,4 @@
-package umu.tds.servicio;
+package umu.tds.utilidades;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;

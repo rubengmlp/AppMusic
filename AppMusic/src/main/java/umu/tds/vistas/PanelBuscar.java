@@ -1,20 +1,31 @@
 package umu.tds.vistas;
 
-import javax.swing.JPanel;
-import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JComboBox;
-import javax.swing.JCheckBox;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.net.URISyntaxException;
+import java.util.EventObject;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.BoxLayout;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.ImageIcon;
+import javax.swing.JTextField;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
+import pulsador.IEncendidoListener;
+import pulsador.Luz;
+import umu.tds.controlador.AppMusic;
+import umu.tds.dominio.repositorios.BDException;
+import umu.tds.persistencia.DAOException;
 
 public class PanelBuscar extends JPanel {
 
@@ -94,8 +105,45 @@ public class PanelBuscar extends JPanel {
 		gbc_btnBuscar.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnBuscar.insets = new Insets(0, 0, 5, 5);
 		gbc_btnBuscar.gridx = 4;
-		gbc_btnBuscar.gridy = 4;
+		gbc_btnBuscar.gridy = 3;
 		panel_1.add(btnBuscar, gbc_btnBuscar);
+		
+		JPanel panel_3 = new JPanel();
+		GridBagConstraints gbc_panel_3 = new GridBagConstraints();
+		gbc_panel_3.insets = new Insets(0, 0, 5, 5);
+		gbc_panel_3.fill = GridBagConstraints.BOTH;
+		gbc_panel_3.gridx = 4;
+		gbc_panel_3.gridy = 4;
+		panel_1.add(panel_3, gbc_panel_3);
+		
+		JLabel lblNewLabel = new JLabel("Cargar de XML");
+		panel_3.add(lblNewLabel);
+		
+		Luz luz = new Luz();
+		panel_3.add(luz);
+		luz.addEncendidoListener(new IEncendidoListener() {
+			public void enteradoCambioEncendido(EventObject e) {
+				if (luz.isEncendido()) {
+					JFileChooser chooser = new JFileChooser();
+					FileNameExtensionFilter filtro = new FileNameExtensionFilter("\"*.xml\"", "xml");
+					chooser.setFileFilter(filtro);
+					chooser.setAcceptAllFileFilterUsed(false);
+					chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+					File currentDirectory = new File("xml");
+					chooser.setCurrentDirectory(currentDirectory);
+					int resultado = chooser.showOpenDialog(chooser);
+					if (resultado == JFileChooser.APPROVE_OPTION) {
+						File file = chooser.getSelectedFile();
+						String archivo = file.getAbsolutePath();
+						try {
+							AppMusic.getUnicaInstancia().cargarCanciones(archivo);
+						} catch (URISyntaxException | DAOException | BDException e1) {
+							e1.printStackTrace();
+						}
+					}
+				}
+			}
+		});
 		
 		JLabel lblEstilo = new JLabel("Estilo");
 		GridBagConstraints gbc_lblEstilo = new GridBagConstraints();

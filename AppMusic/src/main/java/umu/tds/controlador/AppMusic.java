@@ -3,7 +3,6 @@ package umu.tds.controlador;
 import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,6 +21,8 @@ import umu.tds.persistencia.IAdaptadorCancionDAO;
 import umu.tds.persistencia.IAdaptadorEstiloMusicalDAO;
 import umu.tds.persistencia.IAdaptadorPlayListDAO;
 import umu.tds.persistencia.IAdaptadorUsuarioDAO;
+import umu.tds.utilidades.CargadorCancionesDisco;
+import umu.tds.utilidades.Player;
 
 public class AppMusic implements ICargadoListener {
 	private static AppMusic unicaInstancia;
@@ -35,11 +36,13 @@ public class AppMusic implements ICargadoListener {
 	private RepositorioUsuarios repositorioUsuarios;
 
 	private static Usuario usuarioActual;
+	private Player reproductor;
 
 	private AppMusic() throws DAOException, BDException {
 		try {
 			inicializarAdaptadores();
 			inicializarRepositorios();
+			reproductor = new Player();
 		} catch (DAOException e) {
 			throw e;
 		} catch (Exception e) {
@@ -172,6 +175,10 @@ public class AppMusic implements ICargadoListener {
 		c.addOyente(this);
 		c.setArchivoCanciones(fichero);
 	}
+	
+	public void cargarCancionesEnDisco() throws Exception {
+		CargadorCancionesDisco.INSTANCE.cargarCanciones();
+	}
 
 	@Override
 	public void enteradoCarga(CancionesEvent evento) {
@@ -237,5 +244,24 @@ public class AppMusic implements ICargadoListener {
 			playList.addCancion(cancion);
 			adaptadorPlayList.modificarPlayList(playList);
 		}
+	}
+	
+	//Player
+	public void iniciarReproduccion(Cancion cancion) {
+		reproductor.play("play", cancion);
+		cancion.setNumRep(cancion.getNumRep() + 1);
+		adaptadorCancion.modificarCancion(cancion);
+	}
+	
+	public void pausarReproduccion(Cancion cancion) {
+		reproductor.play("pause", cancion);
+	}
+
+	public void detenerReproduccion(Cancion cancion) {
+		reproductor.play("stop", cancion);
+	}
+
+	public Cancion getCancionSonando() {
+		return reproductor.getCancionActual();
 	}
 }

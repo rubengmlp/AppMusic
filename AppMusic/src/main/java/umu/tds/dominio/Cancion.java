@@ -23,6 +23,12 @@ public class Cancion {
 		this.url = url;
 		this.interprete = interprete;
 	}
+	
+	public Cancion (String titulo, String url, String interprete, String estilo) {
+		this.titulo = titulo;
+		this.url = url;
+		this.interprete = interprete;
+	}
 
 	public void addReproduccion() {
 		this.numRep++;

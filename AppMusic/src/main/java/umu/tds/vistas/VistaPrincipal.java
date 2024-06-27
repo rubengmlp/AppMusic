@@ -7,24 +7,21 @@ import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.AbstractListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import umu.tds.controlador.AppMusic;
+import umu.tds.dominio.Cancion;
 import umu.tds.dominio.repositorios.BDException;
 import umu.tds.persistencia.DAOException;
 
@@ -198,6 +195,30 @@ public class VistaPrincipal extends JFrame {
 		panel_1.add(btnNewButton_4);
 
 		JButton btnNewButton_5 = new JButton("Logout");
+		btnNewButton_5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VistaLogin login = new VistaLogin();
+				login.mostrar();
+				Cancion sonando = null;
+				try {
+					sonando = AppMusic.getUnicaInstancia().getCancionSonando();
+				} catch (DAOException | BDException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				if(sonando == null) {
+					dispose();
+				} else {
+					try {
+						AppMusic.getUnicaInstancia().detenerReproduccion(sonando);
+					} catch (DAOException | BDException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					dispose();
+				}
+			}
+		});
 		btnNewButton_5
 				.setIcon(new ImageIcon(VistaPrincipal.class.getResource("/umu/tds/imagenes/icons8-logout-24.png")));
 		panel_1.add(btnNewButton_5);
